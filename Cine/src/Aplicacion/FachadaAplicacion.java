@@ -5,25 +5,50 @@
 package Aplicacion;
 import GUI.*;
 import BaseDatos.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author alumnogreibd
  */
 public class FachadaAplicacion {
+    //Atributos de la fachada de la aplicación
     FachadaGUI fachadaGUI;
     FachadaBaseDatos fachadaBD;
+    GestorUsuario gestUsuario;
     
+    //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
         fachadaGUI = new FachadaGUI(this); 
         fachadaBD = new FachadaBaseDatos(this);
+        gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
     }
     
+    //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
     public static void main(String[] args) {
         FachadaAplicacion fachadaAp;
-        
+ 
         fachadaAp = new FachadaAplicacion();
-        //fachadaAp.iniciar();
+        fachadaAp.iniciar();
+    }
+    
+    //Al iniciar el programa, llamamos a la fachada de la GUI, para que inicie las ventanas
+    public void iniciar() {
+        fachadaGUI.iniciarVentanas();
+    }
+    
+    //Método para mostrar las diferentes excepciones
+    public void muestraExcepcion(String e){
+     fachadaGUI.muestraExcepcion(e);
+    }
+    
+    //Método para comprobar un usuario por el Id (para la autenticación)
+    public Usuario comprobarIdUsuarioAutenticacion(String idUsuario) {
+        Usuario user = null;
+        
+        user = gestUsuario.comprobarIdUsuarioAutenticacion(idUsuario);
+        
+        return user;
     }
     
 }

@@ -19,6 +19,7 @@ import java.util.*;
 public class FachadaBaseDatos {
     FachadaAplicacion fachadaAp;
     Connection conexionBD;
+    DAOUsuarios daoUsuarios;
     
      public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -50,6 +51,8 @@ public class FachadaBaseDatos {
             // Establecemos la conexión a la base de datos
             this.conexionBD = DriverManager.getConnection(urlConexion, usuario, clave);
             System.out.println("Conexión establecida con éxito a la base de datos PostgreSQL.");
+            
+            daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -63,41 +66,15 @@ public class FachadaBaseDatos {
         } catch (IllegalArgumentException ia) {
             System.out.println("Error en la configuración: " + ia.getMessage());
             // fachadaAp.muestraExcepcion(ia.getMessage()); // Descomentar si existe el método en fachadaAp
-        }
-        
-        //Método para comprobar que esté conectada ben. FUNCIONA (borrar)
-        this.obtenerUsuarios();
-    }
-     
-     public List<String> obtenerUsuarios() {
-    List<String> listaUsuarios = new ArrayList<>();
-
-    try {
-        // Creamos una sentencia SQL
-        Statement st = conexionBD.createStatement();
-
-        // Ejecutamos la consulta (ajusta el nombre de la tabla si es diferente)
-        ResultSet rs = st.executeQuery("SELECT nombre FROM usuario");
-
-        // Recorremos los resultados y añadimos a la lista
-        while (rs.next()) {
-            String nombre = rs.getString("nombre");
-            listaUsuarios.add(nombre);
-        }
-
-        // Cerramos los recursos
-        rs.close();
-        st.close();
-
-    } catch (SQLException e) {
-        System.out.println("Error al obtener los usuarios: " + e.getMessage());
-    }
-    
-    for(String nombre : listaUsuarios) {
-        System.out.println(nombre);
-    }
-
-    return listaUsuarios;
+        } 
 }
+     
+     public Usuario comprobarIdUsuarioAutenticacion(String idUsuario) {
+         Usuario user = null;
+         
+         user = daoUsuarios.comprobarIdUsuarioAutenticacion(idUsuario);
+         
+         return user;
+     }
     
 }

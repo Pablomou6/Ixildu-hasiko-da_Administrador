@@ -19,4 +19,20 @@ public class FachadaGUI {
         this.vPrincipal = new VPrincipal(this.fachadaAp);
     }
     
+    //Método para mostrar las excepciones
+    public void muestraExcepcion(String txtExcepcion){
+       VAviso va;
+       
+       va = new VAviso(vPrincipal, true, txtExcepcion);
+       va.setVisible(true);
+    }
+    
+    public void iniciarVentanas() {
+        VAutenticacion vAutenticacion;
+
+        vAutenticacion = new VAutenticacion(vPrincipal, true, fachadaAp);
+        vPrincipal.setVisible(true);
+        vAutenticacion.setVisible(true);
+    }
+    
 }
