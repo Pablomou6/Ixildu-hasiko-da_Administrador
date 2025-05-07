@@ -151,9 +151,9 @@ INSERT INTO Anunciar (idSesion, idAnuncio) VALUES
 
 -- 11. Usuario (vascos conocidos)
 INSERT INTO Usuario (idUsuario, nombre, ap1, ap2, email, contraseña, tipoUsuario, fechaNacimiento) VALUES
-('u003', 'Oihan', 'Sancet', 'Tirapu', 'oihan@cinevasco.eus', '$2a$10$c3loUkzSxWdI9HZJZG078em8V0R3.CPVc7Sy1Ythlivk5lRLg4YMe', 'Normal', '2000-04-25'),
-('mister', 'Ernesto', 'Valverde', 'Tejedor', 'ernesto@cinevasco.eus', '$2a$10$SoXgJQGNy2ThqyWM/E6Pd.FtohTtA1fgrL4rAQ20fwqACwDYm8GO.', 'Administrador', '1964-02-09'),
-('u004', 'Iker', 'Muniain', 'Goñi', 'iker@cinevasco.eus', '$2a$10$eGiPm7fZZtUEtANBi2lcPufyBDG/tDO1W0rO82xPpTrQgnX4qW67y', 'Normal', '1992-12-19');
+('u003', 'Oihan', 'Sancet', 'Tirapu', 'oihan@cinevasco.eus', '$2a$10$c3loUkzSxWdI9HZJZG078em8V0R3.CPVc7Sy1Ythlivk5lRLg4YMe', 'Normal', '2000-04-25'), --sancet2025
+('mister', 'Ernesto', 'Valverde', 'Tejedor', 'ernesto@cinevasco.eus', '$2a$10$SoXgJQGNy2ThqyWM/E6Pd.FtohTtA1fgrL4rAQ20fwqACwDYm8GO.', 'Administrador', '1964-02-09'), --ernesto2025
+('u004', 'Iker', 'Muniain', 'Goñi', 'iker@cinevasco.eus', '$2a$10$eGiPm7fZZtUEtANBi2lcPufyBDG/tDO1W0rO82xPpTrQgnX4qW67y', 'Normal', '1992-12-19'); --muniain2025
 
 -- 12. Reserva
 INSERT INTO Reserva (idUsuario, idSesion, fechaReserva, horaReserva) VALUES
