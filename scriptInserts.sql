@@ -151,8 +151,9 @@ INSERT INTO Anunciar (idSesion, idAnuncio) VALUES
 
 -- 11. Usuario (vascos conocidos)
 INSERT INTO Usuario (idUsuario, nombre, ap1, ap2, email, contraseña, tipoUsuario, fechaNacimiento) VALUES
-('u003', 'Oihan', 'Sancet', 'Tirapu', 'oihan@cinevasco.eus', 'sancet2025', 'Normal', '2000-04-25'),
-('u004', 'Iker', 'Muniain', 'Goñi', 'iker@cinevasco.eus', 'muniain2025', 'Administrador', '1992-12-19');
+('u003', 'Oihan', 'Sancet', 'Tirapu', 'oihan@cinevasco.eus', '$2a$10$c3loUkzSxWdI9HZJZG078em8V0R3.CPVc7Sy1Ythlivk5lRLg4YMe', 'Normal', '2000-04-25'),
+('mister', 'Ernesto', 'Valverde', 'Tejedor', 'ernesto@cinevasco.eus', '$2a$10$SoXgJQGNy2ThqyWM/E6Pd.FtohTtA1fgrL4rAQ20fwqACwDYm8GO.', 'Administrador', '1964-02-09'),
+('u004', 'Iker', 'Muniain', 'Goñi', 'iker@cinevasco.eus', '$2a$10$eGiPm7fZZtUEtANBi2lcPufyBDG/tDO1W0rO82xPpTrQgnX4qW67y', 'Normal', '1992-12-19');
 
 -- 12. Reserva
 INSERT INTO Reserva (idUsuario, idSesion, fechaReserva, horaReserva) VALUES
@@ -291,4 +292,3 @@ INSERT INTO Comida (nombre, descripcion, precio, tamaño, stockDisponible) VALUE
 ('Gilda', 'Aceituna, guindilla y anchoa en un palillo', 1.80, 'Pequeño', 60),
 ('Txistorra', 'Txistorra en bocadillo pequeño', 3.00, 'Mediano', 40),
 ('Sidra vasca', 'Sidra natural Euskal Sagardoa', 2.20, 'Mediano', 70);
-
