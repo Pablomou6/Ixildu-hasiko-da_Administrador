@@ -29,17 +29,60 @@ public class VPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        labelTitulo = new javax.swing.JLabel();
+        textFieldTitulo = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuAdministracion = new javax.swing.JMenu();
+        menuItemCartelera = new javax.swing.JMenuItem();
+        menuItemFacturacion = new javax.swing.JMenuItem();
+        menuItemRestauracion = new javax.swing.JMenuItem();
+        menuItemRRHH = new javax.swing.JMenuItem();
+        menuItemInstalaciones = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        labelTitulo.setText("Título:");
+
+        menuAdministracion.setText("Administración");
+
+        menuItemCartelera.setText("Cartelera");
+        menuAdministracion.add(menuItemCartelera);
+
+        menuItemFacturacion.setText("Facturación");
+        menuAdministracion.add(menuItemFacturacion);
+
+        menuItemRestauracion.setText("Restauración");
+        menuAdministracion.add(menuItemRestauracion);
+
+        menuItemRRHH.setText("RR.HH");
+        menuAdministracion.add(menuItemRRHH);
+
+        menuItemInstalaciones.setText("Instalaciones");
+        menuAdministracion.add(menuItemInstalaciones);
+
+        jMenuBar1.add(menuAdministracion);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addComponent(labelTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTitulo)
+                    .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
 
         pack();
@@ -47,5 +90,14 @@ public class VPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JMenu menuAdministracion;
+    private javax.swing.JMenuItem menuItemCartelera;
+    private javax.swing.JMenuItem menuItemFacturacion;
+    private javax.swing.JMenuItem menuItemInstalaciones;
+    private javax.swing.JMenuItem menuItemRRHH;
+    private javax.swing.JMenuItem menuItemRestauracion;
+    private javax.swing.JTextField textFieldTitulo;
     // End of variables declaration//GEN-END:variables
 }
