@@ -11,13 +11,19 @@ import Aplicacion.*;
  */
 public class VPrincipal extends javax.swing.JFrame {
     FachadaAplicacion fachadaAp;
-
+    ModeloTablaPeliculas modTablaPeliculas;
+    
     /**
      * Creates new form VPrincipal
      */
     public VPrincipal(FachadaAplicacion fa) {
         this.fachadaAp = fa;
         initComponents();
+        //Creamos un objeto da clase ModelotablaPeliculas (a nosa plantilla de métodos para unha tabla)
+        modTablaPeliculas = new ModeloTablaPeliculas();
+        //Seteamos o modelo noso á tabla que temos
+        tablaPeliculas.setModel(modTablaPeliculas);
+        tablaPeliculas.setFillsViewportHeight(true);
     }
 
     /**
@@ -31,10 +37,32 @@ public class VPrincipal extends javax.swing.JFrame {
 
         labelTitulo = new javax.swing.JLabel();
         textFieldTitulo = new javax.swing.JTextField();
+        labelDuracion = new javax.swing.JLabel();
+        textFieldDuracion = new javax.swing.JTextField();
+        labelIdioma = new javax.swing.JLabel();
+        textFieldIdioma = new javax.swing.JTextField();
+        labelGenero = new javax.swing.JLabel();
+        textFieldGenero = new javax.swing.JTextField();
+        labelFechaEstreno = new javax.swing.JLabel();
+        textFieldFechaEstreno = new javax.swing.JTextField();
+        labelClasificacion = new javax.swing.JLabel();
+        textFieldClasificacion = new javax.swing.JTextField();
+        labelDuracionTrailer = new javax.swing.JLabel();
+        textFieldDuracionTrailer = new javax.swing.JTextField();
+        labelSinopsis = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaSinopsis = new javax.swing.JTextArea();
+        botonBuscar = new javax.swing.JButton();
+        botonAnadirEmision = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPeliculas = new javax.swing.JTable();
+        botonSalir = new javax.swing.JButton();
+        botonAñadir = new javax.swing.JButton();
+        botonEditar = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuAdministracion = new javax.swing.JMenu();
         menuItemCartelera = new javax.swing.JMenuItem();
-        menuItemFacturacion = new javax.swing.JMenuItem();
         menuItemRestauracion = new javax.swing.JMenuItem();
         menuItemRRHH = new javax.swing.JMenuItem();
         menuItemInstalaciones = new javax.swing.JMenuItem();
@@ -43,13 +71,79 @@ public class VPrincipal extends javax.swing.JFrame {
 
         labelTitulo.setText("Título:");
 
-        menuAdministracion.setText("Administración");
+        labelDuracion.setText("Duración:");
+
+        labelIdioma.setText("Idioma:");
+
+        labelGenero.setText("Género:");
+
+        labelFechaEstreno.setText("Fecha estreno:");
+
+        labelClasificacion.setText("Clasificación:");
+
+        labelDuracionTrailer.setText("Duración trailer:");
+
+        labelSinopsis.setText("Sinopsis:");
+
+        textAreaSinopsis.setColumns(20);
+        textAreaSinopsis.setRows(5);
+        jScrollPane1.setViewportView(textAreaSinopsis);
+
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+
+        botonAnadirEmision.setText("Añadir emisión");
+        botonAnadirEmision.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAnadirEmisionActionPerformed(evt);
+            }
+        });
+
+        tablaPeliculas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaPeliculas);
+
+        botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+
+        botonAñadir.setText("Añadir");
+
+        botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEditarActionPerformed(evt);
+            }
+        });
+
+        botonEliminar.setText("Eliminar");
+
+        menuAdministracion.setText("Administración cine");
+        menuAdministracion.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
 
         menuItemCartelera.setText("Cartelera");
+        menuItemCartelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCarteleraActionPerformed(evt);
+            }
+        });
         menuAdministracion.add(menuItemCartelera);
-
-        menuItemFacturacion.setText("Facturación");
-        menuAdministracion.add(menuItemFacturacion);
 
         menuItemRestauracion.setText("Restauración");
         menuAdministracion.add(menuItemRestauracion);
@@ -68,12 +162,65 @@ public class VPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(185, 185, 185)
-                .addComponent(labelTitulo)
-                .addGap(18, 18, 18)
-                .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonAñadir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelClasificacion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textFieldClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelGenero)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textFieldGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelDuracionTrailer)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textFieldDuracionTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addComponent(botonEditar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(botonEliminar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(botonSalir))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelTitulo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelDuracion)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelIdioma)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textFieldIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelFechaEstreno)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textFieldFechaEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(labelSinopsis)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(44, 44, 44)
+                                                .addComponent(botonAnadirEmision))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(72, 72, 72)
+                                                .addComponent(botonBuscar)))))))
+                        .addContainerGap(29, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,23 +228,125 @@ public class VPrincipal extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTitulo)
-                    .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(376, Short.MAX_VALUE))
+                    .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDuracion)
+                    .addComponent(textFieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelIdioma)
+                    .addComponent(textFieldIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelClasificacion)
+                    .addComponent(textFieldClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelGenero)
+                    .addComponent(textFieldGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDuracionTrailer)
+                    .addComponent(textFieldDuracionTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFechaEstreno)
+                    .addComponent(textFieldFechaEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelSinopsis)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonAnadirEmision)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonSalir)
+                    .addComponent(botonAñadir)
+                    .addComponent(botonEditar)
+                    .addComponent(botonEliminar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonAnadirEmisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirEmisionActionPerformed
+        //Dado que temos o modelo noso, collemos o objeto del e obtemos a película i-ésima do array con "obtenerPelicula".
+        //desa forma, o i vai ser igual á fila que esté seleccionada na tabla. A tabla ten o noso modelo 
+        Pelicula peliculaAnadir = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
+        
+        //Creamos a ventana para añadir unha sesión
+        VAnadirSesion vAnadirSesion = new VAnadirSesion(this, true, fachadaAp, peliculaAnadir);
+        vAnadirSesion.setVisible(true);
+    }//GEN-LAST:event_botonAnadirEmisionActionPerformed
+
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        //Dado que temos o modelo noso, collemos o objeto del e obtemos a película i-ésima do array con "obtenerPelicula".
+        //desa forma, o i vai ser igual á fila que esté seleccionada na tabla. A tabla ten o noso modelo 
+        Pelicula peliculaEditar = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
+        
+        //Creamos a ventana de edición
+        //if(peliculaEditar != null) {
+            VGestionPeliculas vGestPelicula = new VGestionPeliculas(this, true, fachadaAp, peliculaEditar);
+            vGestPelicula.setVisible(true);
+        //}
+        //else {
+           // fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película.");
+        //}
+    }//GEN-LAST:event_botonEditarActionPerformed
+/**
+ *
+ * MUY IMPORTANTE. os objetos Pelicula, facelos enteirs (non solo almacenar os atributos que se enseñan na tabla).
+ * Esto para que, cando vaias a editar unha, para poder pasar esa pelicula como parámetro, con un "obtenerPelicula" sea suficiente.
+ * Se non almacenamos todos os atributos, algún pode quedar como null e dar a lata.
+ * 
+ */
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void menuItemCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCarteleraActionPerformed
+        // TODO add your handling code here:
+        VCartelera vCartelera;
+        
+        vCartelera = new VCartelera(this, true, fachadaAp);
+        vCartelera.setVisible(true);
+    }//GEN-LAST:event_menuItemCarteleraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAnadirEmision;
+    private javax.swing.JButton botonAñadir;
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonEditar;
+    private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonSalir;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelClasificacion;
+    private javax.swing.JLabel labelDuracion;
+    private javax.swing.JLabel labelDuracionTrailer;
+    private javax.swing.JLabel labelFechaEstreno;
+    private javax.swing.JLabel labelGenero;
+    private javax.swing.JLabel labelIdioma;
+    private javax.swing.JLabel labelSinopsis;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JMenu menuAdministracion;
     private javax.swing.JMenuItem menuItemCartelera;
-    private javax.swing.JMenuItem menuItemFacturacion;
     private javax.swing.JMenuItem menuItemInstalaciones;
     private javax.swing.JMenuItem menuItemRRHH;
     private javax.swing.JMenuItem menuItemRestauracion;
+    private javax.swing.JTable tablaPeliculas;
+    private javax.swing.JTextArea textAreaSinopsis;
+    private javax.swing.JTextField textFieldClasificacion;
+    private javax.swing.JTextField textFieldDuracion;
+    private javax.swing.JTextField textFieldDuracionTrailer;
+    private javax.swing.JTextField textFieldFechaEstreno;
+    private javax.swing.JTextField textFieldGenero;
+    private javax.swing.JTextField textFieldIdioma;
     private javax.swing.JTextField textFieldTitulo;
     // End of variables declaration//GEN-END:variables
 }
