@@ -146,12 +146,27 @@ public class VPrincipal extends javax.swing.JFrame {
         menuAdministracion.add(menuItemCartelera);
 
         menuItemRestauracion.setText("Restauración");
+        menuItemRestauracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRestauracionActionPerformed(evt);
+            }
+        });
         menuAdministracion.add(menuItemRestauracion);
 
         menuItemRRHH.setText("RR.HH");
+        menuItemRRHH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRRHHActionPerformed(evt);
+            }
+        });
         menuAdministracion.add(menuItemRRHH);
 
         menuItemInstalaciones.setText("Instalaciones");
+        menuItemInstalaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemInstalacionesActionPerformed(evt);
+            }
+        });
         menuAdministracion.add(menuItemInstalaciones);
 
         jMenuBar1.add(menuAdministracion);
@@ -314,6 +329,29 @@ public class VPrincipal extends javax.swing.JFrame {
         vCartelera = new VCartelera(this, true, fachadaAp);
         vCartelera.setVisible(true);
     }//GEN-LAST:event_menuItemCarteleraActionPerformed
+
+    private void menuItemRestauracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRestauracionActionPerformed
+        VRestauracion vRestauracion;
+        
+        vRestauracion = new VRestauracion(this, true, fachadaAp);
+        vRestauracion.setVisible(true);
+    }//GEN-LAST:event_menuItemRestauracionActionPerformed
+
+    private void menuItemRRHHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRRHHActionPerformed
+        // TODO add your handling code here:
+        VRecursosHumanos vRRHH;
+        
+        vRRHH = new VRecursosHumanos(this, true, fachadaAp);
+        vRRHH.setVisible(true);
+    }//GEN-LAST:event_menuItemRRHHActionPerformed
+
+    private void menuItemInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInstalacionesActionPerformed
+        // TODO add your handling code here:
+        VInstalaciones vInstalaciones;
+        
+        vInstalaciones = new VInstalaciones(this, true, fachadaAp);
+        vInstalaciones.setVisible(true);
+    }//GEN-LAST:event_menuItemInstalacionesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

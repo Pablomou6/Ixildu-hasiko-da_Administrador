@@ -48,12 +48,12 @@ public class ModeloTablaSesiones extends AbstractTableModel {
         Class clase=null;
 
         switch (col){
-            case 0: clase= java.lang.String.class; break;
-            case 1: clase= java.lang.String.class; break;
+            case 0: clase= java.lang.Integer.class; break;
+            case 1: clase= java.lang.Integer.class; break;
             case 2: clase=java.lang.String.class; break;
             case 3: clase=java.lang.String.class; break;
             case 4: clase=java.lang.String.class; break;
-            case 5: clase=java.lang.String.class; break;
+            case 5: clase=java.lang.Float.class; break;
         }
         return clase;
     }

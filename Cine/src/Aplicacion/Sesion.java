@@ -9,27 +9,27 @@ package Aplicacion;
  * @author alumnogreibd
  */
 public class Sesion {
-    private String idSesion;
-    private String idSala;
+    private Integer idSesion;
+    private Integer idSala;
     private String titulo;
     private String fechaSesion;
     private String horaInicio;
     private String horaFin;
-    private String precio;
+    private Float precio;
 
-    public String getIdSesion() {
+    public Integer getIdSesion() {
         return idSesion;
     }
 
-    public void setIdSesion(String idSesion) {
+    public void setIdSesion(Integer idSesion) {
         this.idSesion = idSesion;
     }
 
-    public String getIdSala() {
+    public Integer getIdSala() {
         return idSala;
     }
 
-    public void setIdSala(String idSala) {
+    public void setIdSala(Integer idSala) {
         this.idSala = idSala;
     }
 
@@ -65,11 +65,11 @@ public class Sesion {
         this.horaFin = horaFin;
     }
 
-    public String getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
     

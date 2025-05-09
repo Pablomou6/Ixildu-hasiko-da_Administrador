@@ -13,7 +13,9 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class VAnadirSesion extends javax.swing.JDialog {
     FachadaAplicacion fachadaAp;
+    VPrincipal padre;
     Pelicula peliculaAnadir;
+    ModeloListasStrings modTodosAnuncios, modRestoAnuncios, modAnunciosSesion;
 
     /**
      * Creates new form VAnadirSesion
@@ -21,8 +23,15 @@ public class VAnadirSesion extends javax.swing.JDialog {
     public VAnadirSesion(java.awt.Frame parent, boolean modal, FachadaAplicacion fa, Pelicula pelicula) {
         super(parent, modal);
         this.fachadaAp = fa;
+        padre = (VPrincipal) parent;
         this.peliculaAnadir = pelicula;
         initComponents();
+        modTodosAnuncios = new ModeloListasStrings();
+        modRestoAnuncios = new ModeloListasStrings();
+        modAnunciosSesion = new ModeloListasStrings();
+        listaDisponibles.setModel(modRestoAnuncios);
+        listaAsignados.setModel(modAnunciosSesion);
+        //Añadir lógica para que se recuperen todos los anuncios. Una vez hecho esto, clasificarlos 
         //cargarSalasEnComboBox();
     }
 
@@ -50,9 +59,9 @@ public class VAnadirSesion extends javax.swing.JDialog {
         labelDisponibles = new javax.swing.JLabel();
         labelAsignados = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaDisponibles = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        listaAsignados = new javax.swing.JList<>();
         botonDerecha = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
@@ -124,19 +133,19 @@ public class VAnadirSesion extends javax.swing.JDialog {
 
         labelAsignados.setText("Asignados");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listaDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listaDisponibles);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        listaAsignados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(listaAsignados);
 
         botonDerecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/flechaD.jpg"))); // NOI18N
         botonDerecha.addActionListener(new java.awt.event.ActionListener() {
@@ -259,13 +268,13 @@ public class VAnadirSesion extends javax.swing.JDialog {
 
     private void botonDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDerechaActionPerformed
         // TODO add your handling code here:
-        ModeloListasStrings modTodosAnuncios, modAnunciosSesion;
+        
         
     }//GEN-LAST:event_botonDerechaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        ModeloListasStrings modTodosAnuncios, modAnunciosSesion;
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
@@ -276,8 +285,6 @@ public class VAnadirSesion extends javax.swing.JDialog {
     private javax.swing.JButton botonDerecha;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -288,6 +295,8 @@ public class VAnadirSesion extends javax.swing.JDialog {
     private javax.swing.JLabel labelPrecio;
     private javax.swing.JLabel labelSala;
     private javax.swing.JLabel labelTituloVentana;
+    private javax.swing.JList<String> listaAsignados;
+    private javax.swing.JList<String> listaDisponibles;
     private javax.swing.JPanel panelAnuncios;
     private javax.swing.JPanel panelSesion;
     private javax.swing.JTextField textFieldFecha;

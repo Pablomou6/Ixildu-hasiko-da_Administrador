@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelTituloVentana" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="labelNombre" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textFieldNombre" min="-2" pref="149" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="labelDni" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textFieldDNI" min="-2" pref="155" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelCargo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="textFieldCargo" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelDniDatos" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="texFieldDniDatos" min="-2" pref="143" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelNombreDatos" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="textFieldNombreDatos" min="-2" pref="108" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelSueldo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="textFieldSueldo" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelAp1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="textFieldAp1" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelTrabajo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxTrabajo" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                      <Component id="labelSala" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cbSala3" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="cbSala1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="cbSala4" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="cbSala2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="cbSala5" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Component id="labelAp2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="textFieldAp2" min="-2" pref="101" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="botonBuscar" max="32767" attributes="0"/>
+                                  <Component id="botonGuardar" max="32767" attributes="0"/>
+                                  <Component id="botonNuevo" max="32767" attributes="0"/>
+                                  <Component id="botonEliminar" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="botonSalir" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelTituloVentana" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelDni" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldDNI" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="326" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="botonNuevo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                      <Component id="botonGuardar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                      <Component id="botonEliminar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelDniDatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNombreDatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelAp1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelAp2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="texFieldDniDatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldNombreDatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldAp1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldAp2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelSueldo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelTrabajo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldSueldo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboBoxTrabajo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSala1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSala4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelSala" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSala2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSala5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cbSala3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonSalir" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelTituloVentana">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="RR.HH"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNombre">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDni">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DNI:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldNombre">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textFieldNombreActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldDNI">
+    </Component>
+    <Component class="javax.swing.JButton" name="botonBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tablaTrabajadores">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="4" rowCount="4">
+                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+              </Table>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="botonNuevo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nuevo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonGuardar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonEliminar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDniDatos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DNI:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNombreDatos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelAp1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apellido 1:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelAp2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apellido 2:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCargo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cargo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSueldo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sueldo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTrabajo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Trabajo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSala">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Salas:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="texFieldDniDatos">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldNombreDatos">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldAp1">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldAp2">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldCargo">
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldSueldo">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboBoxTrabajo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSala1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sala 1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSala2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sala 2"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSala3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sala 3"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSala4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sala 4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSala5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sala 5"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonSalir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Salir"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonSalirActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

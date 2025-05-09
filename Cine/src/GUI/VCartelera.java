@@ -4,6 +4,7 @@
  */
 package GUI;
 import Aplicacion.*;
+import javax.swing.JFrame;
 /**
  *
  * @author alumnogreibd
@@ -104,6 +105,8 @@ public class VCartelera extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonAnuncios)
+                        .addGap(18, 18, 18)
                         .addComponent(botonEditar)
                         .addGap(18, 18, 18)
                         .addComponent(botonSalir))
@@ -132,16 +135,10 @@ public class VCartelera extends javax.swing.JDialog {
                                 .addComponent(labelTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(labelFecha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textFieldFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(botonAnuncios)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(18, 18, 18)
+                        .addComponent(labelFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFieldFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -164,12 +161,12 @@ public class VCartelera extends javax.swing.JDialog {
                     .addComponent(labelInicio)
                     .addComponent(labelPrecio)
                     .addComponent(textFieldHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonAnuncios))
+                    .addComponent(textFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSalir)
-                    .addComponent(botonEditar))
+                    .addComponent(botonEditar)
+                    .addComponent(botonAnuncios))
                 .addContainerGap())
         );
 
@@ -182,7 +179,11 @@ public class VCartelera extends javax.swing.JDialog {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonAnunciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnunciosActionPerformed
-        //Crear unha ventana para os anuncios á cal se lle pasa a sesión seleccionada.
+        //Como en esta ventana solo aparecen las sesiones ya creadas, recuperamos la sesión seleccionada en la tabla
+        Sesion sesionEditar = modTablaSesiones.obtenerSesion(tablaSesiones.getSelectedRow());
+        
+        VAnuncios vAnunciosSesion = new VAnuncios((JFrame)this.getOwner(), true, fachadaAp, sesionEditar);
+        vAnunciosSesion.setVisible(true);
     }//GEN-LAST:event_botonAnunciosActionPerformed
 
 

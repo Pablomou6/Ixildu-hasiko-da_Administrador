@@ -24,16 +24,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Restauraci&#xf3;n"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemRestauracionActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemRRHH">
               <Properties>
                 <Property name="text" type="java.lang.String" value="RR.HH"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemRRHHActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemInstalaciones">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Instalaciones"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemInstalacionesActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
