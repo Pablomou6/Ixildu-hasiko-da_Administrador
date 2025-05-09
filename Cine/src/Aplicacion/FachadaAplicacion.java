@@ -5,7 +5,9 @@
 package Aplicacion;
 import GUI.*;
 import BaseDatos.*;
+import java.time.LocalDate;
 import org.mindrot.jbcrypt.BCrypt;
+import java.util.*;
 
 /**
  *
@@ -16,12 +18,14 @@ public class FachadaAplicacion {
     FachadaGUI fachadaGUI;
     FachadaBaseDatos fachadaBD;
     GestorUsuario gestUsuario;
+    GestorPelicula gestPelicula;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
         fachadaGUI = new FachadaGUI(this); 
         fachadaBD = new FachadaBaseDatos(this);
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
+        gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -49,6 +53,18 @@ public class FachadaAplicacion {
         user = gestUsuario.comprobarIdUsuarioAutenticacion(idUsuario);
         
         return user;
+    }
+    
+    //Método para buscar las películas en la VPrincipal
+    public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, LocalDate fechaEstreno, String duracionTrailer) {
+        
+        List<Pelicula> peliculas = new ArrayList<Pelicula>();
+        
+        //Llamamos al gestor de las peliculas
+        peliculas = gestPelicula.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+        
+        return peliculas;
     }
     
 }

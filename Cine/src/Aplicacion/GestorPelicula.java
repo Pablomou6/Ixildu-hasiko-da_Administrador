@@ -5,7 +5,9 @@
 package Aplicacion;
 
 import BaseDatos.FachadaBaseDatos;
-import GUI.FachadaGUI;
+import GUI.*;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  *
@@ -18,6 +20,17 @@ public class GestorPelicula {
     public GestorPelicula(FachadaGUI fgui, FachadaBaseDatos fbd) {
         this.fachadaGUI = fgui;
         this.fachadaBD = fbd;
+    }
+    
+    public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, LocalDate fechaEstreno, String duracionTrailer) {
+        
+        List<Pelicula> peliculas = new ArrayList<Pelicula>();
+        
+        //Llamamos al gestor de las peliculas
+        peliculas = fachadaBD.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+        
+        return peliculas;
     }
     
 }

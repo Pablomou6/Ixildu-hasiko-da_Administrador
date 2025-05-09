@@ -4,6 +4,8 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  *
@@ -314,7 +316,29 @@ public class VPrincipal extends javax.swing.JFrame {
  * 
  */
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
-        // TODO add your handling code here:
+        List<Pelicula> peliculas = new ArrayList<Pelicula>();
+
+        //Recuperamos todos los textField de la ventana
+        String titulo = textFieldTitulo.getText();
+        String duracion = textFieldDuracion.getText();
+        String genero = textFieldGenero.getText();
+        String sinopsis = textAreaSinopsis.getText();
+        String clasificacion = textFieldClasificacion.getText();
+        String idioma = textFieldIdioma.getText();
+        
+        //Nos aseguramos de que, en caso de no especificar fecha, no dea error al hacer parse
+        String textoFecha = textFieldFechaEstreno.getText().trim();
+        LocalDate fechaEstreno = null;
+        if (!textoFecha.isEmpty()) {
+            fechaEstreno = LocalDate.parse(textoFecha);
+        }
+        
+        String duracionTrailer = textFieldDuracionTrailer.getText();
+        
+        //Llamamos a la fachada de la aplicación
+        peliculas = fachadaAp.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+        
+        modTablaPeliculas.setFilas(peliculas);
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed

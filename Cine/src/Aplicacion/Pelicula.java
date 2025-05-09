@@ -21,6 +21,19 @@ public class Pelicula {
     private LocalDate fechaEstreno;
     private String duracionTrailer;
 
+    public Pelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, String idioma, LocalDate fechaEstreno, String duracionTrailer) {
+        this.titulo = titulo;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.sinopsis = sinopsis;
+        this.clasificacion = clasificacion;
+        this.idioma = idioma;
+        this.fechaEstreno = fechaEstreno;
+        this.duracionTrailer = duracionTrailer;
+    }
+    
+    
+
     public String getTitulo() {
         return titulo;
     }

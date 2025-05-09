@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -20,8 +21,9 @@ public class FachadaBaseDatos {
     FachadaAplicacion fachadaAp;
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
+    DAOPeliculas daoPeliculas;
     
-     public FachadaBaseDatos(FachadaAplicacion fa) {
+    public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
         Properties config = new Properties(); // Objeto para cargar las propiedades del archivo
         FileInputStream docConfig; // Stream para leer el archivo de configuración
@@ -53,28 +55,38 @@ public class FachadaBaseDatos {
             System.out.println("Conexión establecida con éxito a la base de datos PostgreSQL.");
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
+            daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
-            // fachadaAp.muestraExcepcion(f.getMessage()); // Descomentar si existe el método en fachadaAp
+            fachadaAp.muestraExcepcion(f.getMessage()); 
         } catch (IOException io) {
             System.out.println("Error de entrada/salida al leer el archivo de configuración: " + io.getMessage());
-            // fachadaAp.muestraExcepcion(io.getMessage()); // Descomentar si existe el método en fachadaAp
+            fachadaAp.muestraExcepcion(io.getMessage()); 
         } catch (SQLException se) {
             System.out.println("Error al establecer la conexión con la base de datos: " + se.getMessage());
-            // fachadaAp.muestraExcepcion(se.getMessage()); // Descomentar si existe el método en fachadaAp
+            fachadaAp.muestraExcepcion(se.getMessage());
         } catch (IllegalArgumentException ia) {
             System.out.println("Error en la configuración: " + ia.getMessage());
-            // fachadaAp.muestraExcepcion(ia.getMessage()); // Descomentar si existe el método en fachadaAp
+            fachadaAp.muestraExcepcion(ia.getMessage()); 
         } 
-}
+    }
      
-     public Usuario comprobarIdUsuarioAutenticacion(String idUsuario) {
-         Usuario user = null;
-         
-         user = daoUsuarios.comprobarIdUsuarioAutenticacion(idUsuario);
-         
-         return user;
-     }
+    public Usuario comprobarIdUsuarioAutenticacion(String idUsuario) {
+        Usuario user = null;
+
+        user = daoUsuarios.comprobarIdUsuarioAutenticacion(idUsuario);
+
+        return user;
+    }
     
+    public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, LocalDate fechaEstreno, String duracionTrailer) {
+        List<Pelicula> peliculas = new ArrayList<Pelicula>();
+        
+        //Llamamos al gestor de las peliculas
+        peliculas = daoPeliculas.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+        
+        return peliculas;
+    }
 }
