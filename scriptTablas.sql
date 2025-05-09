@@ -260,7 +260,7 @@ CREATE TABLE Usuario (
   ap1            VARCHAR(50)  NOT NULL,
   ap2            VARCHAR(50),
   email          VARCHAR(50)  NOT NULL,
-  contraseña     VARCHAR(50)  NOT NULL,
+  contraseña     VARCHAR(100)  NOT NULL,
   tipoUsuario    VARCHAR(50)  NOT NULL DEFAULT 'Normal',
   fechaNacimiento DATE        NOT NULL
 );
