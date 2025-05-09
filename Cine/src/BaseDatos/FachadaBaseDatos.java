@@ -80,6 +80,7 @@ public class FachadaBaseDatos {
         return user;
     }
     
+    //Método para acceder al DAO para buscar las películas con los atributos dados
     public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, LocalDate fechaEstreno, String duracionTrailer) {
         List<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -88,5 +89,13 @@ public class FachadaBaseDatos {
         peliculas = daoPeliculas.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
         
         return peliculas;
+    }
+    
+    //Método para insertar una película creada por el administrador
+    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
+        //Se realizaron las comprobaciones posibles en el gestor de la películas, por lo que pasamos al DAO directamente
+        if(!daoPeliculas.anadirPelicula(peliculaAnadir)) { return false;}
+        
+        return true;
     }
 }

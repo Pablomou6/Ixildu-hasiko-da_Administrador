@@ -100,4 +100,44 @@ public class DAOPeliculas extends AbstractDAO {
         return resultado;
     }
     
+    //Insert que introduce una película en la BD
+    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            con = this.getConexion();
+            
+            //Creamos el insert
+            String consulta = "INSERT INTO pelicula (titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaestreno, duraciontrailer) " +
+                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            //Pasamos el string al preparedStatement
+            stm = con.prepareStatement(consulta);
+            
+            //Asignamos a cada atributo, la posición que debe ocupar en el insert.
+            //En los que el tipo de dato es Time o Date, debemos hacer el valueof del string
+            stm.setString(1, peliculaAnadir.getTitulo());
+            stm.setTime(2, java.sql.Time.valueOf(peliculaAnadir.getDuracion()));
+            stm.setString(3, peliculaAnadir.getGenero());
+            stm.setString(4, peliculaAnadir.getSinopsis());
+            stm.setString(5, peliculaAnadir.getClasificacion());
+            stm.setString(6, peliculaAnadir.getIdioma());
+            stm.setDate(7, java.sql.Date.valueOf(peliculaAnadir.getFechaEstreno()));
+            stm.setTime(8, java.sql.Time.valueOf(peliculaAnadir.getDuracionTrailer()));
+            
+            //Ejecutamos el insert (es válido con executeUpdate ya que solo es una operación y tenemos el autocommit)
+            stm.executeUpdate();
+        } 
+        catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            return false;
+        } 
+        finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha posido cerrar el PreparedStatement.");}
+        }
+        
+        return true;
+    }
+
+    
 }

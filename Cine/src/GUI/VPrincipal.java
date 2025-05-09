@@ -14,12 +14,16 @@ import java.util.*;
 public class VPrincipal extends javax.swing.JFrame {
     FachadaAplicacion fachadaAp;
     ModeloTablaPeliculas modTablaPeliculas;
+    Boolean anadirPelicula;
     
     /**
      * Creates new form VPrincipal
      */
     public VPrincipal(FachadaAplicacion fa) {
         this.fachadaAp = fa;
+        //Boolean para controlar la creación de películas. Siempre se asignará un false salvo al pulsarlo por primera vez.
+        //De esta forma, al pulsarlo, se activa la isnerción, pero si se hace otra acción, se pone en falso
+        anadirPelicula = false;
         initComponents();
         //Creamos un objeto da clase ModelotablaPeliculas (a nosa plantilla de métodos para unha tabla)
         modTablaPeliculas = new ModeloTablaPeliculas();
@@ -126,6 +130,11 @@ public class VPrincipal extends javax.swing.JFrame {
         });
 
         botonAñadir.setText("Añadir");
+        botonAñadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAñadirActionPerformed(evt);
+            }
+        });
 
         botonEditar.setText("Editar");
         botonEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +144,11 @@ public class VPrincipal extends javax.swing.JFrame {
         });
 
         botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         menuAdministracion.setText("Administración cine");
         menuAdministracion.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
@@ -285,6 +299,7 @@ public class VPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAnadirEmisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirEmisionActionPerformed
+        anadirPelicula = false;
         //Dado que temos o modelo noso, collemos o objeto del e obtemos a película i-ésima do array con "obtenerPelicula".
         //desa forma, o i vai ser igual á fila que esté seleccionada na tabla. A tabla ten o noso modelo 
         Pelicula peliculaAnadir = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
@@ -295,18 +310,19 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAnadirEmisionActionPerformed
 
     private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        anadirPelicula = false;    
         //Dado que temos o modelo noso, collemos o objeto del e obtemos a película i-ésima do array con "obtenerPelicula".
         //desa forma, o i vai ser igual á fila que esté seleccionada na tabla. A tabla ten o noso modelo 
         Pelicula peliculaEditar = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
         
         //Creamos a ventana de edición
-        //if(peliculaEditar != null) {
+        if(peliculaEditar != null) {
             VGestionPeliculas vGestPelicula = new VGestionPeliculas(this, true, fachadaAp, peliculaEditar);
             vGestPelicula.setVisible(true);
-        //}
-        //else {
-           // fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película.");
-        //}
+        }
+        else {
+           fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película.");
+        }
     }//GEN-LAST:event_botonEditarActionPerformed
 /**
  *
@@ -316,6 +332,7 @@ public class VPrincipal extends javax.swing.JFrame {
  * 
  */
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        anadirPelicula = false;
         List<Pelicula> peliculas = new ArrayList<Pelicula>();
 
         //Recuperamos todos los textField de la ventana
@@ -339,6 +356,7 @@ public class VPrincipal extends javax.swing.JFrame {
         peliculas = fachadaAp.buscarPeliculas(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
         
         modTablaPeliculas.setFilas(peliculas);
+        this.limpiarTextField();
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
@@ -347,7 +365,7 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void menuItemCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCarteleraActionPerformed
-        // TODO add your handling code here:
+        anadirPelicula = false;
         VCartelera vCartelera;
         
         vCartelera = new VCartelera(this, true, fachadaAp);
@@ -355,6 +373,7 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemCarteleraActionPerformed
 
     private void menuItemRestauracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRestauracionActionPerformed
+        anadirPelicula = false;
         VRestauracion vRestauracion;
         
         vRestauracion = new VRestauracion(this, true, fachadaAp);
@@ -362,7 +381,7 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemRestauracionActionPerformed
 
     private void menuItemRRHHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRRHHActionPerformed
-        // TODO add your handling code here:
+        anadirPelicula = false;
         VRecursosHumanos vRRHH;
         
         vRRHH = new VRecursosHumanos(this, true, fachadaAp);
@@ -370,13 +389,70 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemRRHHActionPerformed
 
     private void menuItemInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInstalacionesActionPerformed
-        // TODO add your handling code here:
+        anadirPelicula = false;
         VInstalaciones vInstalaciones;
         
         vInstalaciones = new VInstalaciones(this, true, fachadaAp);
         vInstalaciones.setVisible(true);
     }//GEN-LAST:event_menuItemInstalacionesActionPerformed
 
+    private void botonAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAñadirActionPerformed
+        //Con el booleano, si no se ha pulsado anteriormente el botón de añadir, se vacían los campos y se pone a true
+        if(anadirPelicula.equals(false)) {
+            //Al pulsar el botón de añadir, se vacían los campos, para que el admin cubra el formulario
+            textFieldTitulo.setText("");
+            textFieldDuracion.setText("");
+            textFieldGenero.setText("");
+            textAreaSinopsis.setText("");
+            textFieldClasificacion.setText("");
+            textFieldIdioma.setText("");
+            textFieldFechaEstreno.setText("");
+            textFieldDuracionTrailer.setText("");
+            
+            //Ponemos el booleano a true
+            anadirPelicula = true;
+            //Deseleccionamos cualquier posible película de la tabla
+            tablaPeliculas.clearSelection();
+            
+            return;
+        }
+        //En caso de que se pulsara anteriormente, se crea la película
+        
+        //Recuperamos todos los textField de la ventana
+        String titulo = textFieldTitulo.getText();
+        String duracion = textFieldDuracion.getText();
+        String genero = textFieldGenero.getText();
+        String sinopsis = textAreaSinopsis.getText();
+        String clasificacion = textFieldClasificacion.getText();
+        String idioma = textFieldIdioma.getText();
+        //Tomamos la fecha como String, de forma que comprobamos luego si es válido y se parsea
+        String fechaEstreno = textFieldFechaEstreno.getText().trim();
+        String duracionTrailer = textFieldDuracionTrailer.getText();
+        //Independientemente de que se pasara bien o no la información, la intención de insertar ya se ha hecho
+        anadirPelicula = false;
+        
+        if(!fachadaAp.anadirPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) {
+            return;
+        }
+        
+        this.limpiarTextField();
+        botonBuscarActionPerformed(null);
+    }//GEN-LAST:event_botonAñadirActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        anadirPelicula = false;
+    }//GEN-LAST:event_botonEliminarActionPerformed
+    
+    private void limpiarTextField() {
+        textFieldTitulo.setText("");
+        textFieldDuracion.setText("");
+        textFieldGenero.setText("");
+        textAreaSinopsis.setText("");
+        textFieldClasificacion.setText("");
+        textFieldIdioma.setText("");
+        textFieldFechaEstreno.setText("");
+        textFieldDuracionTrailer.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadirEmision;
