@@ -427,11 +427,12 @@ EXECUTE FUNCTION controla_secuencias_comida(); -- Llama a la función definida a
 -- 16.Pedir
 CREATE TABLE Pedir (
   fecha      DATE        NOT NULL,
+  hora       TIME        NOT NULL,
   idComida   INTEGER     NOT NULL,
   idUsuario  VARCHAR(50) NOT NULL,
   cantidad   INTEGER     NOT NULL,
   entregado  BOOLEAN     NOT NULL DEFAULT FALSE,
-  PRIMARY KEY (fecha, idComida, idUsuario),
+  PRIMARY KEY (fecha, hora, idComida, idUsuario),
   FOREIGN KEY (idComida)  REFERENCES Comida(idComida)
                           ON DELETE RESTRICT
                           ON UPDATE CASCADE,
