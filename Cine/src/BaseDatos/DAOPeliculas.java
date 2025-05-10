@@ -6,6 +6,7 @@ package BaseDatos;
 import Aplicacion.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 /**
  *
@@ -77,13 +78,13 @@ public class DAOPeliculas extends AbstractDAO {
             while (rs.next()) {
                 Pelicula p = new Pelicula(
                     rs.getString("titulo"),
-                    rs.getTime("duracion").toLocalTime().toString(),
+                    rs.getTime("duracion").toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
                     rs.getString("genero"),
                     rs.getString("sinopsis"),
                     rs.getString("clasificacion"),
                     rs.getString("idioma"),
                     rs.getDate("fechaestreno").toLocalDate(),
-                    rs.getTime("duraciontrailer").toLocalTime().toString()
+                    rs.getTime("duraciontrailer").toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
                 );
                 resultado.add(p);
             }
@@ -136,6 +137,41 @@ public class DAOPeliculas extends AbstractDAO {
             try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha posido cerrar el PreparedStatement.");}
         }
         
+        return true;
+    }
+    
+    //Función que editará una película de la BD
+    public Boolean editarPelicula(Pelicula peliculaEditar) {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            con = this.getConexion();
+
+            //Creamos la consulta UPDATE (omitimos el campo 'titulo' porque es la PK y no se edita)
+            String consulta = "UPDATE pelicula SET duracion = ?, genero = ?, sinopsis = ?, clasificacion = ?, idioma = ?, fechaestreno = ?, duraciontrailer = ? " +
+                              "WHERE titulo = ?";
+
+            stm = con.prepareStatement(consulta);
+
+            // Asignamos los valores a los parámetros
+            stm.setTime(1, java.sql.Time.valueOf(peliculaEditar.getDuracion()));
+            stm.setString(2, peliculaEditar.getGenero());
+            stm.setString(3, peliculaEditar.getSinopsis());
+            stm.setString(4, peliculaEditar.getClasificacion());
+            stm.setString(5, peliculaEditar.getIdioma());
+            stm.setDate(6, java.sql.Date.valueOf(peliculaEditar.getFechaEstreno()));
+            stm.setTime(7, java.sql.Time.valueOf(peliculaEditar.getDuracionTrailer()));
+            stm.setString(8, peliculaEditar.getTitulo()); //WHERE, donde usamos el titulo (pk) para identificar la pelicula
+
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            return false;
+        } finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha podido cerrar el PreparedStatement."); }
+        }
+
         return true;
     }
 
