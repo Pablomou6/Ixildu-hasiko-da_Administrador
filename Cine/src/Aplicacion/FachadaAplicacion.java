@@ -19,6 +19,9 @@ public class FachadaAplicacion {
     FachadaBaseDatos fachadaBD;
     GestorUsuario gestUsuario;
     GestorPelicula gestPelicula;
+    GestorAnuncio gestAnuncio;
+    GestorAnunciar gestAnunciar;
+    GestorSesion gestSesion;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
@@ -26,6 +29,9 @@ public class FachadaAplicacion {
         fachadaBD = new FachadaBaseDatos(this);
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
         gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
+        gestAnuncio = new GestorAnuncio(fachadaGUI, fachadaBD);
+        gestAnunciar = new GestorAnunciar(fachadaGUI, fachadaBD);
+        gestSesion = new GestorSesion(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -79,6 +85,7 @@ public class FachadaAplicacion {
     public Boolean editarPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, String fechaEstreno, String duracionTrailer) {
         
+        //Llamammos al gestor de películas para actualizar la película
         if(!gestPelicula.editarPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) {
             return false;
         }
@@ -86,4 +93,35 @@ public class FachadaAplicacion {
         return true;
     }
     
+    public ArrayList<Anuncio> obtenerAnuncios() {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        
+        anuncios = gestAnuncio.obtenerAnuncios();
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Anuncio> obtenerAnunciosSesion(Sesion sesionEditar) {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        ArrayList<Integer> idAnuncios = new ArrayList<>();
+        
+        idAnuncios = gestAnunciar.obtenerIdAnunciosSesion(sesionEditar);
+        
+        if(idAnuncios.isEmpty()) {
+            //si no tiene anuncios asociados, se devuelve el array anuncios vacío directamente
+            return anuncios;
+        }
+        
+        anuncios = gestAnuncio.obtenerAnunciosConId(idAnuncios);
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Sesion> obtenerSesiones() {
+        ArrayList<Sesion> sesionesActuales = new ArrayList<Sesion>();
+        
+        sesionesActuales = gestSesion.obtenerSesiones();
+        
+        return sesionesActuales;
+    }
 }

@@ -4,6 +4,7 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 /**
  *
@@ -24,6 +25,7 @@ public class VCartelera extends javax.swing.JDialog {
         this.modTablaSesiones = new ModeloTablaSesiones();
         tablaSesiones.setModel(modTablaSesiones);
         tablaSesiones.setFillsViewportHeight(true);
+        this.mostrarSesiones();
     }
 
     /**
@@ -185,7 +187,12 @@ public class VCartelera extends javax.swing.JDialog {
         VAnuncios vAnunciosSesion = new VAnuncios((JFrame)this.getOwner(), true, fachadaAp, sesionEditar);
         vAnunciosSesion.setVisible(true);
     }//GEN-LAST:event_botonAnunciosActionPerformed
-
+    
+    private void mostrarSesiones() {
+        ArrayList<Sesion> sesionesActuales = fachadaAp.obtenerSesiones();
+        
+        modTablaSesiones.setFilas(sesionesActuales);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnuncios;

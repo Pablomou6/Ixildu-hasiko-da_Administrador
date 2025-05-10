@@ -4,6 +4,9 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 /**
  *
@@ -13,7 +16,8 @@ public class VAnuncios extends javax.swing.JDialog {
     FachadaAplicacion fachadaAp;
     Sesion sesionEditar;
     VPrincipal padre;
-    ModeloListasStrings modTodosAnuncios, modRestoAnuncios, modAnunciosSesion;
+    ModeloListasStrings modRestoAnuncios, modAnunciosSesion;
+    ArrayList<Anuncio> anunciosSesion, restoAnuncios;
     /**
      * Creates new form VAnuncios
      */
@@ -22,13 +26,14 @@ public class VAnuncios extends javax.swing.JDialog {
         this.fachadaAp = fa;
         this.sesionEditar = sesion;
         this.padre = (VPrincipal) parent;
-        modTodosAnuncios = new ModeloListasStrings();
         modRestoAnuncios = new ModeloListasStrings();
         modAnunciosSesion = new ModeloListasStrings();
+        anunciosSesion = new ArrayList<>();
         initComponents();
         listaDisponibles.setModel(modRestoAnuncios);
         listaAsignados.setModel(modAnunciosSesion);
         //Añadir lógica para que se recuperen todos los anuncios. Una vez hecho esto, clasificarlos 
+        this.recuperarAnuncios();
     }
 
     /**
@@ -170,7 +175,32 @@ public class VAnuncios extends javax.swing.JDialog {
     private void botonIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIzquierdaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonIzquierdaActionPerformed
+    
+    private void recuperarAnuncios() {
+        //Vamos a recuperar todos los anuncios disponibles en la base de datos
+        ArrayList<Anuncio> todosAnuncios = fachadaAp.obtenerAnuncios();
+        //Ahora, recuperamos los anuncios asignados a la sesión, de forma que ya los podemos asignar a la tabla. Además,
+        //los usamos para filtrar el resto de anuncios.
+        ArrayList<Anuncio> anunciosSesion = fachadaAp.obtenerAnunciosSesion(sesionEditar);
+        
+        //Ahora, aprovechamos para filtrar el resto de anuncios
+        restoAnuncios = new ArrayList<>(todosAnuncios);
+        restoAnuncios.removeAll(anunciosSesion); //Para usar esta forma de filtrar reimplementamos el método equals en Anuncio
+        
+        //Extraemos solo las temáticas para mostrar en las tablas. Convertimos el array en un stream y por cada anuncio obtenemos su temática.
+        //Ahora, con collect especificamos que los juntamos todos y que con Collector lo transformamos a Lista
+        List<String> tematicasSesion = anunciosSesion.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
 
+        List<String> tematicasDisponibles = restoAnuncios.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+        
+        //Una vez tenemos los anuncios asignados a la sesión, los colocamos en la tabla de la derecha. Lo mismo para la tabla de la izquierda con el resto
+        modAnunciosSesion.setElementos(tematicasSesion);
+        modRestoAnuncios.setElementos(tematicasDisponibles);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
