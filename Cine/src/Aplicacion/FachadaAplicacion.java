@@ -19,6 +19,7 @@ public class FachadaAplicacion {
     FachadaBaseDatos fachadaBD;
     GestorUsuario gestUsuario;
     GestorPelicula gestPelicula;
+    GestorRestauracion gestRestauracion;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
@@ -26,6 +27,7 @@ public class FachadaAplicacion {
         fachadaBD = new FachadaBaseDatos(this);
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
         gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
+        gestRestauracion = new GestorRestauracion(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -67,13 +69,19 @@ public class FachadaAplicacion {
         return peliculas;
     }
     
-    public Boolean anadirPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
-        String idioma, String fechaEstreno, String duracionTrailer) {
-        
-        //Llamamos al gestor de las películas, donde comprobará el formato y creará el objeto
-        if(!gestPelicula.anadirPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) { return false; }
-        
-        return true;
+    public void eliminarPelicula(Pelicula p) {
+        try {
+            gestPelicula.eliminarPelicula(p);
+        } catch (Exception e) {
+            muestraExcepcion("Error al eliminar la película: " + e.getMessage());
+        }
     }
+
+    public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
+        
+        return gestRestauracion.insertarComida(nombre, precio, tamano, stock, descripcion);
+        
+    }
+
     
 }

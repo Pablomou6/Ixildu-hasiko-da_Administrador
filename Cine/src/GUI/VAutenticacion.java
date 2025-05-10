@@ -151,6 +151,7 @@ public class VAutenticacion extends javax.swing.JDialog {
         Usuario user = fachadaAp.comprobarIdUsuarioAutenticacion(idUsuario);
         
         if(user != null && BCrypt.checkpw(contrasena, user.getContrasena()) && user.getTipoUsuario().equals("Administrador")) {
+        //if(user != null){
             return true;
         }
         else {

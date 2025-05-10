@@ -22,6 +22,7 @@ public class FachadaBaseDatos {
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
+    DAORestauracion daoRestauracion;
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -56,6 +57,7 @@ public class FachadaBaseDatos {
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
+            daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -80,7 +82,6 @@ public class FachadaBaseDatos {
         return user;
     }
     
-    //Método para acceder al DAO para buscar las películas con los atributos dados
     public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, LocalDate fechaEstreno, String duracionTrailer) {
         List<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -91,11 +92,12 @@ public class FachadaBaseDatos {
         return peliculas;
     }
     
-    //Método para insertar una película creada por el administrador
-    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
-        //Se realizaron las comprobaciones posibles en el gestor de la películas, por lo que pasamos al DAO directamente
-        if(!daoPeliculas.anadirPelicula(peliculaAnadir)) { return false;}
-        
-        return true;
+    public void eliminarPelicula(Pelicula p) {
+        daoPeliculas.eliminarPelicula(p);
     }
+
+    public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
+        return daoRestauracion.insertarComida(nombre,precio,tamano,stock,descripcion);
+    }
+
 }

@@ -66,6 +66,11 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         botonActualizar.setText("Actualizar");
 
         botonBorrar.setText("Borrar película");
+        botonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBorrarActionPerformed(evt);
+            }
+        });
 
         labelTituloVentana.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         labelTituloVentana.setText("Gestión de películas");
@@ -194,6 +199,21 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
+        
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas eliminar la película '" + peliculaEditar.getTitulo() + "'?\n" +
+                "Se eliminarán también las asociaciones en las tablas Sesion, Valorar y Anuncio.",
+                "Confirmar eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            fachadaAp.eliminarPelicula(peliculaEditar);
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_botonBorrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -2,6 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
+
+//esquema a seguir siempre
+//ventana --> fa --> gestor --> fbd --> dao
+
 package GUI;
 
 import Aplicacion.*;
@@ -182,7 +186,42 @@ public class VRestauracion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirActionPerformed
-        // TODO add your handling code here:
+        
+        String nombre = textFieldNombre.getText().trim();
+        String precioStr = textFieldPrecio.getText().trim();
+        String tamano = textFieldTamano.getText().trim();
+        String stockStr = textFieldStock.getText().trim();
+        String descripcion = textAreaDesc.getText().trim();
+
+        // Validar los campos
+        if (nombre.isEmpty() || precioStr.isEmpty() || tamano.isEmpty() || stockStr.isEmpty() || descripcion.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            double precio = Double.parseDouble(precioStr);
+            int stock = Integer.parseInt(stockStr);
+
+            if (precio <= 0 || stock < 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El precio debe ser positivo y el stock no puede ser negativo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Llamar a la fachada para insertar la comida
+            boolean exito = fachadaAp.insertarComida(nombre, precio, tamano, stock, descripcion);
+
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Producto añadido correctamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                //modListaMenu.addElement(nombre + " - " + precio + "€");
+                limpiarCampos();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al añadir el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El precio y el stock deben ser valores numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_botonAnadirActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
@@ -190,6 +229,13 @@ public class VRestauracion extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void limpiarCampos() {
+        textFieldNombre.setText("");
+        textFieldPrecio.setText("");
+        textFieldTamano.setText("");
+        textFieldStock.setText("");
+        textAreaDesc.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadir;
