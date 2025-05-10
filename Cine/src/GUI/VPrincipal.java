@@ -2,6 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
+//esquema a seguir siempre
+//ventana --> fa --> gestor --> fbd --> dao
+
+
 package GUI;
 import Aplicacion.*;
 import java.time.LocalDate;
@@ -322,7 +327,11 @@ public class VPrincipal extends javax.swing.JFrame {
         }
         else {
            fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película.");
+           return;
         }
+        
+        this.limpiarTextField();
+        botonBuscarActionPerformed(null);
     }//GEN-LAST:event_botonEditarActionPerformed
 /**
  *
@@ -441,6 +450,23 @@ public class VPrincipal extends javax.swing.JFrame {
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         anadirPelicula = false;
+        int filaSeleccionada = tablaPeliculas.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película para eliminar.");
+            return;
+        }
+        
+        Pelicula peliculaEliminar = modTablaPeliculas.obtenerPelicula(filaSeleccionada);
+
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas eliminar la película '" + peliculaEliminar.getTitulo() + "'?\n",
+                "Confirmar eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            //fachadaAp.eliminarPelicula(peliculaEliminar);
+        }
     }//GEN-LAST:event_botonEliminarActionPerformed
     
     private void limpiarTextField() {
@@ -453,8 +479,7 @@ public class VPrincipal extends javax.swing.JFrame {
         textFieldFechaEstreno.setText("");
         textFieldDuracionTrailer.setText("");
     }
-    
-    ///////////NON TOCAR ESTAS VARIABLES/////////////////////////
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadirEmision;
     private javax.swing.JButton botonAñadir;
@@ -488,5 +513,4 @@ public class VPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldIdioma;
     private javax.swing.JTextField textFieldTitulo;
     // End of variables declaration//GEN-END:variables
-    ///////////NON TOCAR ESTAS VARIABLES/////////////////////////
 }
