@@ -218,6 +218,11 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         String duracionTrailer = textFieldDuracionTrailer.getText();
         
         Boolean resultado = fachadaAp.editarPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+        if(!resultado) {
+            return;
+        }
+        
+        this.dispose();
     }//GEN-LAST:event_botonActualizarActionPerformed
     
     private void rellenarTextFields() {
