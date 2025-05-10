@@ -95,4 +95,23 @@ public class GestorPelicula {
         return true;
     }
     
+    public Boolean editarPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, String fechaEstreno, String duracionTrailer) {
+        
+        if(!validarCampos(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) {
+            fachadaGUI.muestraExcepcion("Error al modificar los datos de la película.");
+            return false;
+        }
+        
+        //Todos los atributos contienen información. Además, la fecha de estreno tiene buen formato, por lo que lo parseamos a LocalDate
+        LocalDate fechaEstrenoParsed = LocalDate.parse(fechaEstreno);
+        
+        //Creamos el objeto de Película que vamos a actualizar en la BD
+        Pelicula peliculaEditar = new Pelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstrenoParsed, duracionTrailer);
+        
+        if(!fachadaBD.editarPelicula(peliculaEditar)) { return false; }
+        
+        return true;
+    }
+    
 }

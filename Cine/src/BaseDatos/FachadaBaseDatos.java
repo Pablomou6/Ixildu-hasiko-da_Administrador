@@ -98,4 +98,11 @@ public class FachadaBaseDatos {
         
         return true;
     }
+    
+    public Boolean editarPelicula(Pelicula peliculaEditar) {
+        //La pelicula se pasa una vez comprobada en el gestor. Va directa al DAO
+        if(!daoPeliculas.editarPelicula(peliculaEditar)) { return false; }
+        
+        return true;
+    }
 }

@@ -76,4 +76,14 @@ public class FachadaAplicacion {
         return true;
     }
     
+    public Boolean editarPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, String fechaEstreno, String duracionTrailer) {
+        
+        if(!gestPelicula.editarPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
 }

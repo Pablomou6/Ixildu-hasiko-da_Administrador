@@ -4,6 +4,7 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -21,6 +22,8 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         this.fachadaAp = fa;
         this.peliculaEditar = pelicula;
         initComponents();
+        this.rellenarTextFields();
+        textFieldTitulo.disable();
     }
 
     /**
@@ -37,7 +40,7 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         botonBorrar = new javax.swing.JButton();
         labelTituloVentana = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaSinopsis = new javax.swing.JTextArea();
         labelSinopsis = new javax.swing.JLabel();
         textFieldFechaEstreno = new javax.swing.JTextField();
         labelFechaEstreno = new javax.swing.JLabel();
@@ -64,15 +67,22 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         });
 
         botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
 
         botonBorrar.setText("Borrar película");
 
         labelTituloVentana.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         labelTituloVentana.setText("Gestión de películas");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textAreaSinopsis.setColumns(20);
+        textAreaSinopsis.setLineWrap(true);
+        textAreaSinopsis.setRows(5);
+        textAreaSinopsis.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(textAreaSinopsis);
 
         labelSinopsis.setText("Sinopsis:");
 
@@ -195,13 +205,37 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        //Recuperamos todos los textField de la ventana
+        String titulo = textFieldTitulo.getText();
+        String duracion = textFieldDuracion.getText();
+        String genero = textFieldGenero.getText();
+        String sinopsis = textAreaSinopsis.getText();
+        String clasificacion = textFieldClasificacion.getText();
+        String idioma = textFieldIdioma.getText();
+        //Nos aseguramos de que, en caso de no especificar fecha, no dea error al hacer parse
+        String fechaEstreno = textFieldFechaEstreno.getText().trim();
+        String duracionTrailer = textFieldDuracionTrailer.getText();
+        
+        Boolean resultado = fachadaAp.editarPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer);
+    }//GEN-LAST:event_botonActualizarActionPerformed
+    
+    private void rellenarTextFields() {
+        textFieldTitulo.setText(peliculaEditar.getTitulo());
+        textFieldDuracion.setText(peliculaEditar.getDuracion());
+        textFieldIdioma.setText(peliculaEditar.getIdioma());
+        textFieldClasificacion.setText(peliculaEditar.getClasificacion());
+        textFieldGenero.setText(peliculaEditar.getGenero());
+        textFieldDuracionTrailer.setText(peliculaEditar.getDuracionTrailer());
+        textFieldFechaEstreno.setText(peliculaEditar.getFechaEstreno().toString());
+        textAreaSinopsis.setText(peliculaEditar.getSinopsis());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonBorrar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelClasificacion;
     private javax.swing.JLabel labelDuracion;
     private javax.swing.JLabel labelDuracionTrailer;
@@ -211,6 +245,7 @@ public class VGestionPeliculas extends javax.swing.JDialog {
     private javax.swing.JLabel labelSinopsis;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTituloVentana;
+    private javax.swing.JTextArea textAreaSinopsis;
     private javax.swing.JTextField textFieldClasificacion;
     private javax.swing.JTextField textFieldDuracion;
     private javax.swing.JTextField textFieldDuracionTrailer;
