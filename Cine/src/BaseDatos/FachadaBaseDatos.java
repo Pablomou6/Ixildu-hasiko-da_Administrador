@@ -143,4 +143,12 @@ public class FachadaBaseDatos {
         
         return sesiones;
     }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosEliminar, Sesion sesionEditar) {
+        if(!daoAnunciar.actualizarAnunciosSesion(anunciosIntroducir, anunciosEliminar, sesionEditar)) {
+            return false;
+        } 
+        
+        return true;
+    }
 }

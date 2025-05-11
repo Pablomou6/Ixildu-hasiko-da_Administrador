@@ -50,4 +50,57 @@ public class DAOAnunciar extends AbstractDAO {
 
         return idAnuncios;
     }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosEliminar, Sesion sesionEditar) {
+        Connection conn = null;
+        PreparedStatement psEliminar = null;
+        PreparedStatement psInsertar = null;
+        conn = this.getConexion();
+
+        try {
+            conn.setAutoCommit(false);  
+
+            String deleteSQL = "DELETE FROM anunciar WHERE idsesion = ? AND idanuncio = ?";
+            psEliminar = conn.prepareStatement(deleteSQL);
+            //Este bucle, si el array está vacío, ya no se ejecutará
+            for (Anuncio anuncio : anunciosEliminar) {
+                psEliminar.setInt(1, sesionEditar.getIdSesion());
+                psEliminar.setInt(2, anuncio.getIdAnuncio());
+                //Añadimos la instrucción al lote, para ejecutarlas todas juntas
+                psEliminar.addBatch();
+            }
+            //Ejecutamos el lote
+            psEliminar.executeBatch();
+
+            String insertSQL = "INSERT INTO anunciar (idsesion, idanuncio) VALUES (?, ?)";
+            psInsertar = conn.prepareStatement(insertSQL);
+            //Este bucle, si el array está vacío, ya no se ejecutará
+            for (Anuncio anuncio : anunciosIntroducir) {
+                psInsertar.setInt(1, sesionEditar.getIdSesion());
+                psInsertar.setInt(2, anuncio.getIdAnuncio());
+                psInsertar.addBatch();
+            }
+            psInsertar.executeBatch();
+
+            conn.commit();  //Confirma la transacción
+
+        } 
+        catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getNextException().getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback();  //Nos aseguramos de revertir la transacción en caso de error
+                } catch (SQLException ex) {
+                    this.getFachadaAplicacion().muestraExcepcion("No se pudo deshacer la transacción.");
+                }
+            }
+            return false;
+        } 
+        finally {
+            try { if (psEliminar != null) psEliminar.close(); } catch (Exception e) { System.out.println("No se pudo cerrar el primer PreparedStatement."); }
+            try { if (psInsertar != null) psInsertar.close(); } catch (Exception e) { System.out.println("No se pudo cerrar PreparedStatement."); }
+            try { conn.setAutoCommit(true); } catch (SQLException e) { this.getFachadaAplicacion().muestraExcepcion("No se pudo reestablecer el autocommit."); }
+        }
+        return true;
+    }
 }
