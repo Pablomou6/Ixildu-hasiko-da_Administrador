@@ -78,9 +78,15 @@ public class FachadaAplicacion {
     }
 
     public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
-        
         return gestRestauracion.insertarComida(nombre, precio, tamano, stock, descripcion);
-        
+    }
+    
+    public boolean eliminarComida(int idComida) {
+        return gestRestauracion.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+        return gestRestauracion.obtenerComidas();
     }
 
     

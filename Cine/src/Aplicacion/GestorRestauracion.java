@@ -6,6 +6,7 @@ package Aplicacion;
 
 import BaseDatos.FachadaBaseDatos;
 import GUI.FachadaGUI;
+import java.util.List;
 
 /**
  *
@@ -22,9 +23,15 @@ public class GestorRestauracion {
     }
 
     boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
-        
         return fachadaBD.insertarComida(nombre, precio, tamano, stock, descripcion);
-        
+    }
+    
+    public boolean eliminarComida(int idComida) {
+        return fachadaBD.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+       return fachadaBD.obtenerComidas();
     }
     
 }

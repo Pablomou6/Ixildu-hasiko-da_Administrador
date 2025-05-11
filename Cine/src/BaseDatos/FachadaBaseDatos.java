@@ -99,5 +99,13 @@ public class FachadaBaseDatos {
     public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
         return daoRestauracion.insertarComida(nombre,precio,tamano,stock,descripcion);
     }
+    
+    public boolean eliminarComida(int idComida) {
+        return daoRestauracion.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+        return daoRestauracion.obtenerComidas();
+    }
 
 }
