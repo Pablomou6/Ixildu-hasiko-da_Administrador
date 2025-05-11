@@ -22,6 +22,8 @@ public class FachadaBaseDatos {
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
+    DAORestauracion daoRestauracion;
+    DAOInstalaciones daoInstalaciones;
     DAOAnuncios daoAnuncios;
     DAOAnunciar daoAnunciar;
     DAOSesiones daoSesiones;
@@ -59,6 +61,8 @@ public class FachadaBaseDatos {
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
+            daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
+            daoInstalaciones = new DAOInstalaciones(conexionBD, fachadaAp);
             daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
             daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
             daoSesiones = new DAOSesiones(conexionBD, fa);
@@ -86,7 +90,6 @@ public class FachadaBaseDatos {
         return user;
     }
     
-    //Método para acceder al DAO para buscar las películas con los atributos dados
     public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, LocalDate fechaEstreno, String duracionTrailer) {
         List<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -97,14 +100,34 @@ public class FachadaBaseDatos {
         return peliculas;
     }
     
-    //Método para insertar una película creada por el administrador
-    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
-        //Se realizaron las comprobaciones posibles en el gestor de la películas, por lo que pasamos al DAO directamente
-        if(!daoPeliculas.anadirPelicula(peliculaAnadir)) { return false;}
-        
-        return true;
+    public void eliminarPelicula(Pelicula p) {
+        daoPeliculas.eliminarPelicula(p);
+    }
+
+    public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
+        return daoRestauracion.insertarComida(nombre,precio,tamano,stock,descripcion);
     }
     
+    public boolean eliminarComida(int idComida) {
+        return daoRestauracion.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+        return daoRestauracion.obtenerComidas();
+    }
+    
+    public List<String> obtenerSalas() {
+        return daoInstalaciones.obtenerSalas();
+    }
+
+    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+        return daoInstalaciones.obtenerTrabajadoresSala(idSala);
+    }
+
+    public List<Equipo> obtenerEquiposSala(String idSala) {
+        return daoInstalaciones.obtenerEquiposSala(idSala);
+    }
+
     public Boolean editarPelicula(Pelicula peliculaEditar) {
         //La pelicula se pasa una vez comprobada en el gestor. Va directa al DAO
         if(!daoPeliculas.editarPelicula(peliculaEditar)) { return false; }

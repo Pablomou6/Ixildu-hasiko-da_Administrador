@@ -2,9 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
+
+//esquema a seguir siempre
+//ventana --> fa --> gestor --> fbd --> dao
+
 package GUI;
 
 import Aplicacion.*;
+import java.util.List;
 
 /**
  *
@@ -23,6 +28,7 @@ public class VRestauracion extends javax.swing.JDialog {
         modListaMenu = new ModeloListasStrings();
         initComponents();
         listaMenu.setModel(modListaMenu);
+        cargarComidas();
     }
 
     /**
@@ -80,6 +86,11 @@ public class VRestauracion extends javax.swing.JDialog {
         });
 
         botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         labelMenu.setText("Menú:");
 
@@ -182,7 +193,43 @@ public class VRestauracion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirActionPerformed
-        // TODO add your handling code here:
+        
+        String nombre = textFieldNombre.getText().trim();
+        String precioStr = textFieldPrecio.getText().trim();
+        String tamano = textFieldTamano.getText().trim();
+        String stockStr = textFieldStock.getText().trim();
+        String descripcion = textAreaDesc.getText().trim();
+
+        // Validar los campos
+        if (nombre.isEmpty() || precioStr.isEmpty() || tamano.isEmpty() || stockStr.isEmpty() || descripcion.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            double precio = Double.parseDouble(precioStr);
+            int stock = Integer.parseInt(stockStr);
+
+            if (precio <= 0 || stock < 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El precio debe ser positivo y el stock no puede ser negativo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Llamar a la fachada para insertar la comida
+            boolean exito = fachadaAp.insertarComida(nombre, precio, tamano, stock, descripcion);
+
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Producto añadido correctamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                //modListaMenu.addElement(nombre + " - " + precio + "€");
+                limpiarCampos();
+                cargarComidas();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al añadir el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El precio y el stock deben ser valores numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_botonAnadirActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
@@ -190,6 +237,57 @@ public class VRestauracion extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // Obtener el elemento seleccionado de la lista
+        String comidaSeleccionada = listaMenu.getSelectedValue();
+
+        if (comidaSeleccionada == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto del menú para eliminar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Extraer el ID de la comida (suponiendo que el formato de la lista incluye el ID)
+        String[] partes = comidaSeleccionada.split(" - "); // Ajustar según el formato de la lista
+        int idComida;
+        try {
+            idComida = Integer.parseInt(partes[0]); // ID debe estar en la primera parte
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al obtener el ID de la comida seleccionada.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Confirmar la eliminación
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este producto?", "Confirmación", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirmacion != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // Llamar a la fachada para eliminar la comida
+        boolean exito = fachadaAp.eliminarComida(idComida);
+
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Producto eliminado correctamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se pudo eliminar el producto. Puede estar asociado a un pedido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        cargarComidas();
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void cargarComidas() {
+        // Obtener la lista de comidas desde la fachada
+        List<String> comidas = fachadaAp.obtenerComidas();
+
+        // Actualizar el modelo de la lista
+        modListaMenu.setElementos(comidas);
+    }
+    
+    private void limpiarCampos() {
+        textFieldNombre.setText("");
+        textFieldPrecio.setText("");
+        textFieldTamano.setText("");
+        textFieldStock.setText("");
+        textAreaDesc.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadir;

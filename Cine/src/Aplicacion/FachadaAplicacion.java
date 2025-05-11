@@ -19,6 +19,8 @@ public class FachadaAplicacion {
     FachadaBaseDatos fachadaBD;
     GestorUsuario gestUsuario;
     GestorPelicula gestPelicula;
+    GestorRestauracion gestRestauracion;
+    GestorInstalaciones gestInstalaciones;
     GestorAnuncio gestAnuncio;
     GestorAnunciar gestAnunciar;
     GestorSesion gestSesion;
@@ -29,6 +31,8 @@ public class FachadaAplicacion {
         fachadaBD = new FachadaBaseDatos(this);
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
         gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
+        gestRestauracion = new GestorRestauracion(fachadaGUI, fachadaBD);
+        gestInstalaciones = new GestorInstalaciones(fachadaGUI, fachadaBD);
         gestAnuncio = new GestorAnuncio(fachadaGUI, fachadaBD);
         gestAnunciar = new GestorAnunciar(fachadaGUI, fachadaBD);
         gestSesion = new GestorSesion(fachadaGUI, fachadaBD);
@@ -73,15 +77,38 @@ public class FachadaAplicacion {
         return peliculas;
     }
     
-    public Boolean anadirPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
-        String idioma, String fechaEstreno, String duracionTrailer) {
-        
-        //Llamamos al gestor de las películas, donde comprobará el formato y creará el objeto
-        if(!gestPelicula.anadirPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) { return false; }
-        
-        return true;
+    public void eliminarPelicula(Pelicula p) {
+        try {
+            gestPelicula.eliminarPelicula(p);
+        } catch (Exception e) {
+            muestraExcepcion("Error al eliminar la película: " + e.getMessage());
+        }
+    }
+
+    public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
+        return gestRestauracion.insertarComida(nombre, precio, tamano, stock, descripcion);
     }
     
+    public boolean eliminarComida(int idComida) {
+        return gestRestauracion.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+        return gestRestauracion.obtenerComidas();
+    }
+    
+    public List<String> obtenerSalas() {
+        return gestInstalaciones.obtenerSalas();
+    }
+
+    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+        return gestInstalaciones.obtenerTrabajadoresSala(idSala);
+    }
+
+    public List<Equipo> obtenerEquiposSala(String idSala) {
+        return gestInstalaciones.obtenerEquiposSala(idSala);
+    }
+
     public Boolean editarPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, String fechaEstreno, String duracionTrailer) {
         
