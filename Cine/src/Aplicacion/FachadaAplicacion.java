@@ -172,4 +172,8 @@ public class FachadaAplicacion {
         
         return true;
     }
+
+    public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return gestEquipo.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
+    }
 }

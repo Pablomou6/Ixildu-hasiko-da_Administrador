@@ -57,4 +57,31 @@ public class DAOEquipo extends AbstractDAO {
         return resultado;
     }
     
+    public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            con = this.getConexion();
+            String consulta = 
+                "INSERT INTO Equipo (idSala, nombre, tipo, modelo, precio, marca, fechaAdquisicion) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            stm = con.prepareStatement(consulta);
+            stm.setInt(1, idSala);
+            stm.setString(2, nombre);
+            stm.setString(3, tipo);
+            stm.setString(4, modelo);
+            stm.setDouble(5, precio);
+            stm.setString(6, marca);
+            stm.setDate(7, java.sql.Date.valueOf(java.time.LocalDate.now())); // Fecha actual
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            return false;
+        } finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { }
+        }
+    }
+    
 }

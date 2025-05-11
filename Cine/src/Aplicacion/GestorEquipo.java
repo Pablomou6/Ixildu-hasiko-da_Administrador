@@ -25,4 +25,8 @@ public class GestorEquipo {
         return fachadaBD.obtenerEquiposSala(idSala);
     }
     
+    public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return fachadaBD.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
+    }
+    
 }

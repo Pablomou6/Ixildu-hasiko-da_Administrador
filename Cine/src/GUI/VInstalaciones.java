@@ -56,6 +56,17 @@ public class VInstalaciones extends javax.swing.JDialog {
         botonAnadir = new javax.swing.JButton();
         botonGuardar = new javax.swing.JButton();
         botonBorrar = new javax.swing.JButton();
+        labelNuevo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        nombretextfield = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tipotextfield = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        modelotextfield = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        preciotextfield = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        marcatextfield = new javax.swing.JTextField();
         botonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -99,7 +110,7 @@ public class VInstalaciones extends javax.swing.JDialog {
                     .addGroup(panelSalasLayout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         panelSalasLayout.setVerticalGroup(
             panelSalasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,51 +149,119 @@ public class VInstalaciones extends javax.swing.JDialog {
         jScrollPane2.setViewportView(tablaEquipo);
 
         botonAnadir.setText("Añadir");
+        botonAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAnadirActionPerformed(evt);
+            }
+        });
 
         botonGuardar.setText("Guardar");
 
         botonBorrar.setText("Borrar");
+
+        labelNuevo.setText("Nuevo:");
+
+        jLabel2.setText("Nombre");
+
+        nombretextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombretextfieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Tipo");
+
+        jLabel4.setText("Modelo");
+
+        jLabel5.setText("Precio [€,cents]");
+
+        jLabel1.setText("Marca");
 
         javax.swing.GroupLayout panelEquipoLayout = new javax.swing.GroupLayout(panelEquipo);
         panelEquipo.setLayout(panelEquipoLayout);
         panelEquipoLayout.setHorizontalGroup(
             panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEquipoLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(127, 127, 127)
+                .addComponent(labelFraseEquipo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboBoxEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelEquipoLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelNuevo)
+                        .addGroup(panelEquipoLayout.createSequentialGroup()
+                            .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(panelEquipoLayout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(nombretextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel3))
+                                .addGroup(panelEquipoLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(marcatextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEquipoLayout.createSequentialGroup()
+                                    .addComponent(tipotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel5))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEquipoLayout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(modelotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEquipoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(botonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botonAnadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelEquipoLayout.createSequentialGroup()
-                        .addComponent(labelFraseEquipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(preciotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEquipoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                        .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonGuardar)
+                            .addComponent(botonAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63))))
         );
         panelEquipoLayout.setVerticalGroup(
             panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEquipoLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(15, 15, 15)
                 .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFraseEquipo)
                     .addComponent(comboBoxEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEquipoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(32, Short.MAX_VALUE))
-                    .addGroup(panelEquipoLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(20, 20, 20)
                         .addComponent(botonAnadir)
-                        .addGap(94, 94, 94)
+                        .addGap(40, 40, 40)
                         .addComponent(botonGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonBorrar)
-                        .addGap(54, 54, 54))))
+                        .addGap(50, 50, 50)
+                        .addComponent(botonBorrar))
+                    .addGroup(panelEquipoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(labelNuevo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nombretextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(tipotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(preciotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modelotextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(marcatextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
         );
 
         jTabbedPane1.addTab("Equipo", panelEquipo);
@@ -247,6 +326,42 @@ public class VInstalaciones extends javax.swing.JDialog {
             cargarEquiposSala(idSalaInt);
         }
     }//GEN-LAST:event_comboBoxEquipoActionPerformed
+
+    private void nombretextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombretextfieldActionPerformed
+        //IGNORAR
+    }//GEN-LAST:event_nombretextfieldActionPerformed
+
+    private void botonAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirActionPerformed
+        // Validar que todos los campos estén completos
+        if (nombretextfield.getText().isEmpty() || tipotextfield.getText().isEmpty() || 
+            preciotextfield.getText().isEmpty() || marcatextfield.getText().isEmpty() || modelotextfield.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Obtener los datos del formulario
+            String nombre = nombretextfield.getText();
+            String tipo = tipotextfield.getText();
+            String modelo = modelotextfield.getText();
+            String marca = marcatextfield.getText();
+            double precio = Double.parseDouble(preciotextfield.getText()); // Precio del equipo
+            int idSala = Integer.parseInt((String) comboBoxEquipo.getSelectedItem()); // ID de la sala seleccionada
+
+            // Llamar a la fachada para añadir el equipo
+            boolean exito = fachadaAp.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
+
+            if (exito) {
+                // Actualizar la tabla de equipos
+                cargarEquiposSala(idSala);
+                javax.swing.JOptionPane.showMessageDialog(this, "Equipo añadido correctamente.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al añadir el equipo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingrese datos válidos en los campos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonAnadirActionPerformed
     
     private void cargarSalas() {
         List<Integer> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
@@ -318,15 +433,26 @@ public class VInstalaciones extends javax.swing.JDialog {
     private javax.swing.JButton botonSalir;
     private javax.swing.JComboBox<String> comboBoxEquipo;
     private javax.swing.JComboBox<String> comboBoxSala;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel labelFraseEquipo;
     private javax.swing.JLabel labelFraseSala;
+    private javax.swing.JLabel labelNuevo;
     private javax.swing.JLabel labelTituloVentana;
+    private javax.swing.JTextField marcatextfield;
+    private javax.swing.JTextField modelotextfield;
+    private javax.swing.JTextField nombretextfield;
     private javax.swing.JPanel panelEquipo;
     private javax.swing.JPanel panelSalas;
+    private javax.swing.JTextField preciotextfield;
     private javax.swing.JTable tablaEquipo;
     private javax.swing.JTable tablaTrabajadores;
+    private javax.swing.JTextField tipotextfield;
     // End of variables declaration//GEN-END:variables
 }
