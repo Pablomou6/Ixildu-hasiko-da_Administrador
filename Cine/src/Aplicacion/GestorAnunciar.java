@@ -28,4 +28,12 @@ public class GestorAnunciar {
         
         return idAnuncios;
     }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosEliminar, Sesion sesionEditar) {
+        if(!fachadaBD.actualizarAnunciosSesion(anunciosIntroducir, anunciosEliminar, sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
 }

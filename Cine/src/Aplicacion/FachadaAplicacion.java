@@ -124,4 +124,12 @@ public class FachadaAplicacion {
         
         return sesionesActuales;
     }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosBorrar, Sesion sesionEditar) {
+        if(!gestAnunciar.actualizarAnunciosSesion(anunciosIntroducir, anunciosBorrar, sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
 }
