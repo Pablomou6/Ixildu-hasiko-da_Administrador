@@ -173,7 +173,7 @@ public class VInstalaciones extends javax.swing.JDialog {
 
         jLabel4.setText("Modelo");
 
-        jLabel5.setText("Precio [€,cents]");
+        jLabel5.setText("Precio [€.cents]");
 
         jLabel1.setText("Marca");
 
