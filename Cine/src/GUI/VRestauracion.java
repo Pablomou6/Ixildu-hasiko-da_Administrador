@@ -75,7 +75,9 @@ public class VRestauracion extends javax.swing.JDialog {
         labelDescripcion.setText("Descripción:");
 
         textAreaDesc.setColumns(20);
+        textAreaDesc.setLineWrap(true);
         textAreaDesc.setRows(5);
+        textAreaDesc.setWrapStyleWord(true);
         jScrollPane1.setViewportView(textAreaDesc);
 
         botonAnadir.setText("Añadir");
