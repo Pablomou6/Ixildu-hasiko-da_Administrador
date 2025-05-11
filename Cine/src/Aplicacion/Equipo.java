@@ -19,6 +19,13 @@ public class Equipo {
     private String marca;
     private String modelo;
     private LocalDate fechaAdquisicion;
+    
+    public Equipo(Integer idEquipo, String nombre, String tipo, String modelo) {
+        this.idEquipo = idEquipo;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.modelo = modelo;
+    }
 
     public Integer getIdEquipo() {
         return idEquipo;

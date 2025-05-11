@@ -101,43 +101,35 @@ public class DAOPeliculas extends AbstractDAO {
         return resultado;
     }
     
-    //Insert que introduce una película en la BD
-    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
-        Connection con = null;
-        PreparedStatement stm = null;
-
+    public void eliminarPelicula(Pelicula p) {
+        Connection conexion = null;
         try {
-            con = this.getConexion();
-            
-            //Creamos el insert
-            String consulta = "INSERT INTO pelicula (titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaestreno, duraciontrailer) " +
-                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            //Pasamos el string al preparedStatement
-            stm = con.prepareStatement(consulta);
-            
-            //Asignamos a cada atributo, la posición que debe ocupar en el insert.
-            //En los que el tipo de dato es Time o Date, debemos hacer el valueof del string
-            stm.setString(1, peliculaAnadir.getTitulo());
-            stm.setTime(2, java.sql.Time.valueOf(peliculaAnadir.getDuracion()));
-            stm.setString(3, peliculaAnadir.getGenero());
-            stm.setString(4, peliculaAnadir.getSinopsis());
-            stm.setString(5, peliculaAnadir.getClasificacion());
-            stm.setString(6, peliculaAnadir.getIdioma());
-            stm.setDate(7, java.sql.Date.valueOf(peliculaAnadir.getFechaEstreno()));
-            stm.setTime(8, java.sql.Time.valueOf(peliculaAnadir.getDuracionTrailer()));
-            
-            //Ejecutamos el insert (es válido con executeUpdate ya que solo es una operación y tenemos el autocommit)
-            stm.executeUpdate();
-        } 
-        catch (SQLException e) {
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-            return false;
-        } 
-        finally {
-            try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha posido cerrar el PreparedStatement.");}
+            conexion = this.getConexion();
+
+            // Verificar si la película tiene sesiones
+            String checkSql = "SELECT COUNT(*) FROM sesion WHERE titulo = ?";
+            PreparedStatement checkStmt = conexion.prepareStatement(checkSql);
+            checkStmt.setString(1, p.getTitulo());
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int numSesiones = rs.getInt(1);
+            rs.close();
+            checkStmt.close();
+
+            if (numSesiones > 0) {
+                throw new RuntimeException("No se puede eliminar la película porque tiene sesiones asociadas.");
+            }
+
+            // Si no hay sesiones, eliminar la película
+            String sql = "DELETE FROM pelicula WHERE titulo = ?";
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            stmt.setString(1, p.getTitulo());
+            stmt.executeUpdate();
+            stmt.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la película: " + e.getMessage());
         }
-        
-        return true;
     }
     
     //Función que editará una película de la BD
@@ -174,6 +166,7 @@ public class DAOPeliculas extends AbstractDAO {
 
         return true;
     }
+
 
     
 }

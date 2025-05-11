@@ -4,6 +4,7 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.List;
 
 /**
  *
@@ -28,6 +29,7 @@ public class VInstalaciones extends javax.swing.JDialog {
         tablaEquipo.setModel(modTablaEquipos);
         tablaEquipo.setFillsViewportHeight(true);
         //Lógica para que combobox muestre los id's de las salas existentes
+        cargarSalas();
     }
 
     /**
@@ -64,6 +66,11 @@ public class VInstalaciones extends javax.swing.JDialog {
         labelFraseSala.setText("Trabajadores asignados a la sala:");
 
         comboBoxSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxSalaActionPerformed(evt);
+            }
+        });
 
         tablaTrabajadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,7 +80,7 @@ public class VInstalaciones extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "DNI", "Nombre", "Cargo", "Sueldo"
             }
         ));
         jScrollPane1.setViewportView(tablaTrabajadores);
@@ -111,6 +118,11 @@ public class VInstalaciones extends javax.swing.JDialog {
         labelFraseEquipo.setText("Equipo asignado a la sala:");
 
         comboBoxEquipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxEquipoActionPerformed(evt);
+            }
+        });
 
         tablaEquipo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,7 +132,7 @@ public class VInstalaciones extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Tipo", "Modelo"
             }
         ));
         jScrollPane2.setViewportView(tablaEquipo);
@@ -218,6 +230,61 @@ public class VInstalaciones extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void comboBoxSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSalaActionPerformed
+        // TODO add your handling code here:
+        String salaSeleccionada = (String) comboBoxSala.getSelectedItem();
+        if (salaSeleccionada != null) {
+            cargarTrabajadoresSala(salaSeleccionada);
+        }
+    }//GEN-LAST:event_comboBoxSalaActionPerformed
+
+    private void comboBoxEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxEquipoActionPerformed
+        // TODO add your handling code here:
+        String salaSeleccionada = (String) comboBoxEquipo.getSelectedItem();
+        if (salaSeleccionada != null) {
+            cargarEquiposSala(salaSeleccionada);
+        }
+    }//GEN-LAST:event_comboBoxEquipoActionPerformed
+    
+    private void cargarSalas() {
+        List<String> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
+
+        comboBoxSala.removeAllItems();
+        comboBoxEquipo.removeAllItems();
+
+        for (String sala : salas) {
+            comboBoxSala.addItem(sala);
+            comboBoxEquipo.addItem(sala);
+        }
+
+        // Seleccionar la primera sala por defecto y cargar los datos
+        if (!salas.isEmpty()) {
+            comboBoxSala.setSelectedIndex(0);
+            comboBoxEquipo.setSelectedIndex(0);
+            cargarTrabajadoresSala(salas.get(0));
+            cargarEquiposSala(salas.get(0));
+        }
+    }
+    
+    private void cargarTrabajadoresSala(String idSala) {
+        List<Trabajador> trabajadores = fachadaAp.obtenerTrabajadoresSala(idSala); // Obtener trabajadores desde la fachada
+        modTablaTrabajadores.setFilas(trabajadores); // Actualizar el modelo de la tabla
+    }
+    
+    private void cargarEquiposSala(String idSala) {
+        List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSala); // Obtener equipos desde la fachada
+        modTablaEquipos.setFilas(equipos); // Actualizar el modelo de la tabla
+    }
+    
+    /*
+    private void cargarEquiposSala(int idSala) {
+    // Obtener los equipos de la sala desde la fachada
+        List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSala);
+
+        // Actualizar el modelo de la tabla
+        modTablaEquipos.setFilas(equipos);
+    }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadir;
