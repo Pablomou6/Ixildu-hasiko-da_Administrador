@@ -9,12 +9,22 @@ package Aplicacion;
  * @author alumnogreibd
  */
 public class Trabajador {
-    private String Dni;
     private String nombre;
     private String apellido1;
     private String apellido2;
+    private String Dni;
     private String cargo;
     private Float sueldo;
+    
+    
+    public Trabajador(String nombre, String apellido1, String apellido2, String Dni, String cargo, Float sueldo){
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.Dni = Dni;
+        this.cargo = cargo;
+        this.sueldo = sueldo;
+    }
 
     public String getDni() {
         return Dni;

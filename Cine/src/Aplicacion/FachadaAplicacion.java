@@ -19,6 +19,7 @@ public class FachadaAplicacion {
     FachadaBaseDatos fachadaBD;
     GestorUsuario gestUsuario;
     GestorPelicula gestPelicula;
+    GestorTrabajador gestTrabajador;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
@@ -26,6 +27,7 @@ public class FachadaAplicacion {
         fachadaBD = new FachadaBaseDatos(this);
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
         gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
+        gestTrabajador = new GestorTrabajador(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -74,6 +76,22 @@ public class FachadaAplicacion {
         if(!gestPelicula.anadirPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) { return false; }
         
         return true;
+    }
+    
+    public void insertarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSelec){
+        gestTrabajador.insertarTrabajador(trab,tipo,salasSelec);
+    }
+
+    public List<Trabajador> obtenerTrabajador(String nombre, String dni) {
+        return gestTrabajador.obtenerTrabajador(nombre,dni);
+    }
+
+    public String obtenerTipoTrabajador(String dni) {
+        return gestTrabajador.obtenerTipoTrabajador(dni);
+    }
+
+    public List<Integer> obtenerSalasTrabajador(String dni) {
+        return gestTrabajador.obtenerSalasTrabajador(dni);
     }
     
 }

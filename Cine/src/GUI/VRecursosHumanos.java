@@ -4,6 +4,11 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +29,6 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         tablaTrabajadores.setFillsViewportHeight(true);
         //Lógica para coller os valores do enum
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +87,11 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         });
 
         botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
 
         tablaTrabajadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,14 +101,24 @@ public class VRecursosHumanos extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Cargo", "Sueldo"
             }
         ));
         jScrollPane1.setViewportView(tablaTrabajadores);
 
         botonNuevo.setText("Nuevo");
+        botonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevoActionPerformed(evt);
+            }
+        });
 
         botonGuardar.setText("Guardar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarActionPerformed(evt);
+            }
+        });
 
         botonEliminar.setText("Eliminar");
 
@@ -119,7 +138,12 @@ public class VRecursosHumanos extends javax.swing.JDialog {
 
         labelSala.setText("Salas:");
 
-        comboBoxTrabajo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxTrabajo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Limpieza", "Proyección" }));
+        comboBoxTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxTrabajoActionPerformed(evt);
+            }
+        });
 
         cbSala1.setText("Sala 1");
 
@@ -270,10 +294,11 @@ public class VRecursosHumanos extends javax.swing.JDialog {
                     .addComponent(cbSala1)
                     .addComponent(cbSala4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSala)
-                    .addComponent(cbSala2)
-                    .addComponent(cbSala5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbSala2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelSala)
+                        .addComponent(cbSala5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbSala3)
@@ -284,6 +309,70 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void visualizarDatosTrabajadores(ModeloTablaTrabajadores m) {
+        Trabajador trab = m.obtenerTrabajador(tablaTrabajadores.getSelectedRow());
+        
+        texFieldDniDatos.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getDni());
+        textFieldNombreDatos.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getNombre());
+        textFieldAp1.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getApellido1());
+        textFieldAp2.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getApellido2());
+        textFieldCargo.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getCargo());
+        textFieldSueldo.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getSueldo().toString());
+        
+        // Obtener el tipo y marcarlo en el comboBox
+        String tipo = fachadaAp.obtenerTipoTrabajador(trab.getDni());
+        comboBoxTrabajo.setSelectedItem(tipo);
+        
+        // Obtener salas y marcar los checkboxes
+        List<Integer> salasAsignadas = fachadaAp.obtenerSalasTrabajador(trab.getDni());
+        cbSala1.setSelected(salasAsignadas.contains(1));
+        cbSala2.setSelected(salasAsignadas.contains(2));
+        cbSala3.setSelected(salasAsignadas.contains(3));
+        cbSala4.setSelected(salasAsignadas.contains(4));
+        cbSala5.setSelected(salasAsignadas.contains(5));
+        
+        
+    }
+    
+    private void buscarTrabajadores() {
+        ModeloTablaTrabajadores m;
+
+        m=(ModeloTablaTrabajadores) tablaTrabajadores.getModel();
+        m.setFilas(fachadaAp.obtenerTrabajador(textFieldNombre.getText(), textFieldDNI.getText()));
+        if (m.getRowCount() > 0) {
+            tablaTrabajadores.setRowSelectionInterval(0, 0);
+            //seleccionamos la fila que queremos con getSelectedRow y a partir de que le pasamos ese parámetro a obtenerUsuarios, este busca el usuario a partir del índice
+            visualizarDatosTrabajadores(m);
+            botonGuardar.setEnabled(true);
+            botonEliminar.setEnabled(true);
+           
+            // Hacer clic en la lista
+            tablaTrabajadores.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int row = tablaTrabajadores.rowAtPoint(e.getPoint()); // Get clicked row
+                    if (row != -1) { // Ensure row is valid
+                        int column = tablaTrabajadores.columnAtPoint(e.getPoint());
+                        Object value = tablaTrabajadores.getValueAt(row, column);
+                        System.out.println("Clicked on row: " + row + ", column: " + column + "\nValue: " + value);
+                        
+                        ModeloTablaTrabajadores mtu = (ModeloTablaTrabajadores) tablaTrabajadores.getModel();
+        
+                        
+                        mtu.obtenerTrabajador(tablaTrabajadores.getSelectedRow());
+                        visualizarDatosTrabajadores(mtu);
+                    }
+                }
+            });
+        }
+        else{
+            botonGuardar.setEnabled(false);
+            botonEliminar.setEnabled(false);
+        }
+    }   
+    
+    
+    
     private void textFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldNombreActionPerformed
@@ -292,6 +381,58 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
+    
+    private void alerta(String mensaje, String titulo) {
+        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void botonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoActionPerformed
+        
+    }//GEN-LAST:event_botonNuevoActionPerformed
+
+    private void comboBoxTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTrabajoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxTrabajoActionPerformed
+
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        String nombre = textFieldNombreDatos.getText();
+        String ap1 = textFieldAp1.getText();
+        String dni = texFieldDniDatos.getText();
+        Float sueldo = Float.parseFloat(textFieldSueldo.getText());
+        String ap2 = textFieldAp2.getText();
+        String cargo = textFieldCargo.getText();
+        Trabajador trab = new Trabajador(nombre,ap1,ap2,dni,cargo,sueldo);
+        String tipo = comboBoxTrabajo.getSelectedItem().toString();
+        ArrayList<Integer> salasSeleccionadas = new ArrayList<>();
+        if (cbSala1.isSelected()) salasSeleccionadas.add(1);
+        if (cbSala2.isSelected()) salasSeleccionadas.add(2);
+        if (cbSala3.isSelected()) salasSeleccionadas.add(3);
+        if (cbSala4.isSelected()) salasSeleccionadas.add(4);
+        if (cbSala5.isSelected()) salasSeleccionadas.add(5);
+        
+        if (nombre == null || nombre.isEmpty() ||
+            ap1 == null || ap1.isEmpty() ||
+            ap2 == null || ap2.isEmpty() ||
+            dni == null || dni.isEmpty() ||
+            cargo == null || cargo.isEmpty() ||
+            sueldo == null || sueldo.toString().isEmpty()){
+            
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Apellido 1: " + ap1);
+            System.out.println("Apellido 2: " + ap2);
+            System.out.println("DNI: " + dni);
+            System.out.println("Cargo: " + cargo);
+            System.out.println("Sueldo: " + sueldo);
+            
+            alerta("Rellena todos los campos, por favor", "Error");
+            return;
+        }        
+        fachadaAp.insertarTrabajador(trab,tipo,salasSeleccionadas);
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        buscarTrabajadores();
+    }//GEN-LAST:event_botonBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

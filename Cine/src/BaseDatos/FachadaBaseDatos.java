@@ -22,6 +22,7 @@ public class FachadaBaseDatos {
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
+    DAOTrabajadores daoTrabajadores;
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -56,6 +57,7 @@ public class FachadaBaseDatos {
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
+            daoTrabajadores = new DAOTrabajadores(conexionBD, fachadaAp);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -98,4 +100,23 @@ public class FachadaBaseDatos {
         
         return true;
     }
+    
+    public boolean insertarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSelec){
+        if(!daoTrabajadores.insertarTrabajador(trab, tipo, salasSelec)){ return false;}
+        
+        return true;
+    }
+
+    public List<Trabajador> obtenerTrabajador(String nombre, String dni) {
+        return daoTrabajadores.obtenerTrabajador(nombre,dni);        
+    }
+
+    public String obtenerTipoTrabajador(String dni) {
+        return daoTrabajadores.obtenerTipoTrabajador(dni);
+    }
+
+    public List<Integer> obtenerSalasTrabajador(String dni) {
+        return daoTrabajadores.obtenerSalasTrabajador(dni);
+    }
 }
+
