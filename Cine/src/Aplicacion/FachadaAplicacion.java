@@ -77,6 +77,15 @@ public class FachadaAplicacion {
         return peliculas;
     }
     
+    public Boolean anadirPelicula(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
+        String idioma, String fechaEstreno, String duracionTrailer) {
+        
+        //Llamamos al gestor de las películas, donde comprobará el formato y creará el objeto
+        if(!gestPelicula.anadirPelicula(titulo, duracion, genero, sinopsis, clasificacion, idioma, fechaEstreno, duracionTrailer)) { return false; }
+        
+        return true;
+    }
+    
     public void eliminarPelicula(Pelicula p) {
         try {
             gestPelicula.eliminarPelicula(p);
