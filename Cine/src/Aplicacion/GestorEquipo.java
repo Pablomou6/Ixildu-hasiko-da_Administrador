@@ -11,24 +11,16 @@ import java.util.List;
  *
  * @author alumnogreibd
  */
-public class GestorInstalaciones {
+public class GestorEquipo {
     
     FachadaGUI fachadaGUI;
     FachadaBaseDatos fachadaBD;
     
-    public GestorInstalaciones(FachadaGUI fgui, FachadaBaseDatos fbd) {
+    public GestorEquipo(FachadaGUI fgui, FachadaBaseDatos fbd) {
         this.fachadaGUI = fgui;
         this.fachadaBD = fbd;
     }
     
-    public List<String> obtenerSalas() {
-        return fachadaBD.obtenerSalas();
-    }
-
-    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
-        return fachadaBD.obtenerTrabajadoresSala(idSala);
-    }
-
     public List<Equipo> obtenerEquiposSala(String idSala) {
         return fachadaBD.obtenerEquiposSala(idSala);
     }
