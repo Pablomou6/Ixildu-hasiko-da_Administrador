@@ -20,6 +20,7 @@ public class FachadaAplicacion {
     GestorUsuario gestUsuario;
     GestorPelicula gestPelicula;
     GestorRestauracion gestRestauracion;
+    GestorInstalaciones gestInstalaciones;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
@@ -28,6 +29,7 @@ public class FachadaAplicacion {
         gestUsuario = new GestorUsuario(fachadaGUI, fachadaBD);
         gestPelicula = new GestorPelicula(fachadaGUI, fachadaBD);
         gestRestauracion = new GestorRestauracion(fachadaGUI, fachadaBD);
+        gestInstalaciones = new GestorInstalaciones(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -87,6 +89,18 @@ public class FachadaAplicacion {
     
     public List<String> obtenerComidas() {
         return gestRestauracion.obtenerComidas();
+    }
+    
+    public List<String> obtenerSalas() {
+        return gestInstalaciones.obtenerSalas();
+    }
+
+    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+        return gestInstalaciones.obtenerTrabajadoresSala(idSala);
+    }
+
+    public List<Equipo> obtenerEquiposSala(String idSala) {
+        return gestInstalaciones.obtenerEquiposSala(idSala);
     }
 
     
