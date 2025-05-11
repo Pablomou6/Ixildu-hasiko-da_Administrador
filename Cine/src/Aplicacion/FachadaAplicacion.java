@@ -114,11 +114,11 @@ public class FachadaAplicacion {
         return gestSalas.obtenerSalas();
     }
 
-    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+    public List<Trabajador> obtenerTrabajadoresSala(int idSala) {
         return gestTrabajar.obtenerTrabajadoresSala(idSala);
     }
 
-    public List<Equipo> obtenerEquiposSala(String idSala) {
+    public List<Equipo> obtenerEquiposSala(int idSala) {
         return gestEquipo.obtenerEquiposSala(idSala);
     }
 

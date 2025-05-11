@@ -21,7 +21,7 @@ public class GestorEquipo {
         this.fachadaBD = fbd;
     }
     
-    public List<Equipo> obtenerEquiposSala(String idSala) {
+    public List<Equipo> obtenerEquiposSala(int idSala) {
         return fachadaBD.obtenerEquiposSala(idSala);
     }
     

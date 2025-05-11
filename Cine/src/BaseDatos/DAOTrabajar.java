@@ -20,7 +20,7 @@ public class DAOTrabajar extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
     
-    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+    public List<Trabajador> obtenerTrabajadoresSala(int idSala) {
         List<Trabajador> resultado = new ArrayList<>();
         Connection con = null;
         PreparedStatement stm = null;
@@ -28,14 +28,28 @@ public class DAOTrabajar extends AbstractDAO {
 
         try {
             con = this.getConexion();
-            String consulta = "SELECT * FROM trabajadorlimpieza WHERE idsala = ? UNION SELECT * FROM trabajadorproyeccion WHERE idsala = ?";
+            String consulta = 
+                "SELECT t.dni, t.nombre, t.cargo, t.sueldo " +
+                "FROM TrabajadorLimpieza t " +
+                "JOIN TrabajarLimpieza tl ON t.dni = tl.dni " +
+                "WHERE tl.idSala = ? " +
+                "UNION " +
+                "SELECT t.dni, t.nombre, t.cargo, t.sueldo " +
+                "FROM TrabajadorProyeccion t " +
+                "JOIN TrabajarProyeccion tp ON t.dni = tp.dni " +
+                "WHERE tp.idSala = ?";
             stm = con.prepareStatement(consulta);
-            stm.setString(1, idSala);
-            stm.setString(2, idSala);
+            stm.setInt(1, idSala); // Usar setInt en lugar de setString
+            stm.setInt(2, idSala);
             rs = stm.executeQuery();
 
             while (rs.next()) {
-                Trabajador t = new Trabajador(rs.getString("dni"), rs.getString("nombre"), rs.getString("cargo"), rs.getDouble("sueldo"));
+                Trabajador t = new Trabajador(
+                    rs.getString("dni"),
+                    rs.getString("nombre"),
+                    rs.getString("cargo"),
+                    rs.getDouble("sueldo")
+                );
                 resultado.add(t);
             }
         } catch (SQLException e) {
@@ -47,5 +61,4 @@ public class DAOTrabajar extends AbstractDAO {
 
         return resultado;
     }
-    
 }

@@ -266,15 +266,38 @@ public class VInstalaciones extends javax.swing.JDialog {
         }
     }
     
+    /*
     private void cargarTrabajadoresSala(String idSala) {
         List<Trabajador> trabajadores = fachadaAp.obtenerTrabajadoresSala(idSala); // Obtener trabajadores desde la fachada
         modTablaTrabajadores.setFilas(trabajadores); // Actualizar el modelo de la tabla
-    }
+    }*/
     
+    private void cargarTrabajadoresSala(String idSala) {
+        try {
+            int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
+            List<Trabajador> trabajadores = fachadaAp.obtenerTrabajadoresSala(idSalaInt); // Cambiar el método para aceptar un entero
+            modTablaTrabajadores.setFilas(trabajadores); // Actualizar el modelo de la tabla
+        } catch (NumberFormatException e) {
+            System.err.println("Error: idSala no es un número válido.");
+        }
+    }   
+    
+    /*
     private void cargarEquiposSala(String idSala) {
         List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSala); // Obtener equipos desde la fachada
         modTablaEquipos.setFilas(equipos); // Actualizar el modelo de la tabla
+    }*/
+    
+    private void cargarEquiposSala(String idSala) {
+        try {
+            int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
+            List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSalaInt); // Cambiar el método para aceptar un entero
+            modTablaEquipos.setFilas(equipos); // Actualizar el modelo de la tabla
+        } catch (NumberFormatException e) {
+            System.err.println("Error: idSala no es un número válido.");
+        }
     }
+    
     
     /*
     private void cargarEquiposSala(int idSala) {

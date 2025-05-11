@@ -132,11 +132,11 @@ public class FachadaBaseDatos {
         return daoSalas.obtenerSalas();
     }
 
-    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
+    public List<Trabajador> obtenerTrabajadoresSala(int idSala) {
         return daoTrabajar.obtenerTrabajadoresSala(idSala);
     }
 
-    public List<Equipo> obtenerEquiposSala(String idSala) {
+    public List<Equipo> obtenerEquiposSala(int idSala) {
         return daoEquipo.obtenerEquiposSala(idSala);
     }
 
