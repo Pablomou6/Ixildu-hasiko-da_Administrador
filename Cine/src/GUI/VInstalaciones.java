@@ -234,7 +234,8 @@ public class VInstalaciones extends javax.swing.JDialog {
         // TODO add your handling code here:
         String salaSeleccionada = (String) comboBoxSala.getSelectedItem();
         if (salaSeleccionada != null) {
-            cargarTrabajadoresSala(salaSeleccionada);
+            int idSalaInt = Integer.parseInt(salaSeleccionada); // Convertir idSala a entero
+            cargarTrabajadoresSala(idSalaInt);
         }
     }//GEN-LAST:event_comboBoxSalaActionPerformed
 
@@ -242,19 +243,20 @@ public class VInstalaciones extends javax.swing.JDialog {
         // TODO add your handling code here:
         String salaSeleccionada = (String) comboBoxEquipo.getSelectedItem();
         if (salaSeleccionada != null) {
-            cargarEquiposSala(salaSeleccionada);
+            int idSalaInt = Integer.parseInt(salaSeleccionada); // Convertir idSala a entero
+            cargarEquiposSala(idSalaInt);
         }
     }//GEN-LAST:event_comboBoxEquipoActionPerformed
     
     private void cargarSalas() {
-        List<String> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
+        List<Integer> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
 
         comboBoxSala.removeAllItems();
         comboBoxEquipo.removeAllItems();
 
-        for (String sala : salas) {
-            comboBoxSala.addItem(sala);
-            comboBoxEquipo.addItem(sala);
+        for (Integer sala : salas) {
+            comboBoxSala.addItem(sala.toString());
+            comboBoxEquipo.addItem(sala.toString());
         }
 
         // Seleccionar la primera sala por defecto y cargar los datos
@@ -272,10 +274,10 @@ public class VInstalaciones extends javax.swing.JDialog {
         modTablaTrabajadores.setFilas(trabajadores); // Actualizar el modelo de la tabla
     }*/
     
-    private void cargarTrabajadoresSala(String idSala) {
+    private void cargarTrabajadoresSala(Integer idSala) {
         try {
-            int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
-            List<Trabajador> trabajadores = fachadaAp.obtenerTrabajadoresSala(idSalaInt); // Cambiar el método para aceptar un entero
+            //int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
+            List<Trabajador> trabajadores = fachadaAp.obtenerTrabajadoresSala(idSala); // Cambiar el método para aceptar un entero
             modTablaTrabajadores.setFilas(trabajadores); // Actualizar el modelo de la tabla
         } catch (NumberFormatException e) {
             System.err.println("Error: idSala no es un número válido.");
@@ -288,10 +290,10 @@ public class VInstalaciones extends javax.swing.JDialog {
         modTablaEquipos.setFilas(equipos); // Actualizar el modelo de la tabla
     }*/
     
-    private void cargarEquiposSala(String idSala) {
+    private void cargarEquiposSala(Integer idSala) {
         try {
-            int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
-            List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSalaInt); // Cambiar el método para aceptar un entero
+            //int idSalaInt = Integer.parseInt(idSala); // Convertir idSala a entero
+            List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSala); // Cambiar el método para aceptar un entero
             modTablaEquipos.setFilas(equipos); // Actualizar el modelo de la tabla
         } catch (NumberFormatException e) {
             System.err.println("Error: idSala no es un número válido.");

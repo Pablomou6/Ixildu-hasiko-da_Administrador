@@ -128,7 +128,7 @@ public class FachadaBaseDatos {
         return daoRestauracion.obtenerComidas();
     }
     
-    public List<String> obtenerSalas() {
+    public List<Integer> obtenerSalas() {
         return daoSalas.obtenerSalas();
     }
 

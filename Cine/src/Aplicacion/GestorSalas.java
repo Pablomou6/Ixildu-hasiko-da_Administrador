@@ -21,7 +21,7 @@ public class GestorSalas {
         this.fachadaBD = fbd;
     }
     
-    public List<String> obtenerSalas() {
+    public List<Integer> obtenerSalas() {
         return fachadaBD.obtenerSalas();
     }
 }

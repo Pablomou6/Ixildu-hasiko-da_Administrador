@@ -110,7 +110,7 @@ public class FachadaAplicacion {
         return gestRestauracion.obtenerComidas();
     }
     
-    public List<String> obtenerSalas() {
+    public List<Integer> obtenerSalas() {
         return gestSalas.obtenerSalas();
     }
 

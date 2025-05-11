@@ -19,8 +19,8 @@ public class DAOSalas extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
     
-    public List<String> obtenerSalas() {
-        List<String> resultado = new ArrayList<>();
+    public List<Integer> obtenerSalas() {
+        List<Integer> resultado = new ArrayList<>();
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -32,7 +32,7 @@ public class DAOSalas extends AbstractDAO {
             rs = stm.executeQuery();
 
             while (rs.next()) {
-                resultado.add(rs.getString("idSala"));
+                resultado.add(rs.getInt("idSala"));
             }
         } catch (SQLException e) {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
