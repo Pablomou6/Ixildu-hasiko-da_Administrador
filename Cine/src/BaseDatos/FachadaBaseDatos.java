@@ -100,6 +100,14 @@ public class FachadaBaseDatos {
         return peliculas;
     }
     
+    //Método para insertar una película creada por el administrador
+    public Boolean anadirPelicula(Pelicula peliculaAnadir) {
+        //Se realizaron las comprobaciones posibles en el gestor de la películas, por lo que pasamos al DAO directamente
+        if(!daoPeliculas.anadirPelicula(peliculaAnadir)) { return false;}
+        
+        return true;
+    }
+    
     public void eliminarPelicula(Pelicula p) {
         daoPeliculas.eliminarPelicula(p);
     }

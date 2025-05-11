@@ -465,7 +465,7 @@ public class VPrincipal extends javax.swing.JFrame {
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            //fachadaAp.eliminarPelicula(peliculaEliminar);
+            fachadaAp.eliminarPelicula(peliculaEliminar);
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
     
