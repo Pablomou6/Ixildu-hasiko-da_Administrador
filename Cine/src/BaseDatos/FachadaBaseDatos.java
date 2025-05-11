@@ -27,6 +27,7 @@ public class FachadaBaseDatos {
     DAOAnuncios daoAnuncios;
     DAOAnunciar daoAnunciar;
     DAOSesiones daoSesiones;
+    DAOSalas daoSalas;
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -65,7 +66,8 @@ public class FachadaBaseDatos {
             daoInstalaciones = new DAOInstalaciones(conexionBD, fachadaAp);
             daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
             daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
-            daoSesiones = new DAOSesiones(conexionBD, fa);
+            daoSesiones = new DAOSesiones(conexionBD, fachadaAp);
+            daoSalas = new DAOSalas(conexionBD, fachadaAp);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -180,6 +182,27 @@ public class FachadaBaseDatos {
             return false;
         } 
         
+        return true;
+    }
+    
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return daoSalas.recuperarIdsSalas();
+    }
+    
+    public ArrayList<Sesion> recuperarSesionesSalaFecha(Integer idSala, String fecha) {
+        
+        return daoSesiones.recuperarSesionesSalaFecha(idSala, fecha);
+    }
+    
+    
+    public ArrayList<Integer> recuperarAnunciosIdSesion(Integer idSesion) {
+        return daoAnunciar.recuperarAnunciosIdSesion(idSesion);
+    }
+    
+    public Boolean anadirSesion(Sesion sesionAnadir, ArrayList<Anuncio> anunciosAsignados) {
+        if(!daoSesiones.anadirSesion(sesionAnadir, anunciosAsignados)) {
+            return false;
+        }
         return true;
     }
 }

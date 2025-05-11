@@ -24,6 +24,7 @@ public class FachadaAplicacion {
     GestorAnuncio gestAnuncio;
     GestorAnunciar gestAnunciar;
     GestorSesion gestSesion;
+    GestorSala gestSala;
     
     //Constructor, donde creamos los objetos de las otras fachadas. Le pasamos esta fachada para que se comuniquen con esta, no entre la BD y la GUI
     FachadaAplicacion() {
@@ -36,6 +37,7 @@ public class FachadaAplicacion {
         gestAnuncio = new GestorAnuncio(fachadaGUI, fachadaBD);
         gestAnunciar = new GestorAnunciar(fachadaGUI, fachadaBD);
         gestSesion = new GestorSesion(fachadaGUI, fachadaBD);
+        gestSala = new GestorSala(fachadaGUI, fachadaBD);
     }
     
     //Método main, en el que creamos la fachada de aplicación e iniciamos el programa
@@ -163,6 +165,19 @@ public class FachadaAplicacion {
     
     public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosBorrar, Sesion sesionEditar) {
         if(!gestAnunciar.actualizarAnunciosSesion(anunciosIntroducir, anunciosBorrar, sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return gestSala.recuperarIdsSalas();
+    }
+    
+    public Boolean anadirSesion(Integer idSala, String horaInicio, String fecha, Float precio, ArrayList<Anuncio> anunciosAsignados, Pelicula peliculaAnadir) {
+        
+        if(!gestSesion.anadirSesion(idSala, horaInicio, fecha, precio, anunciosAsignados, peliculaAnadir)) {
             return false;
         }
         

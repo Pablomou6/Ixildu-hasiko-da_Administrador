@@ -28,6 +28,15 @@ public class Sesion {
         this.precio = precio;
     }
 
+    public Sesion(Integer idSala, String titulo, String fechaSesion, String horaInicio, Float precio) {
+        this.idSala = idSala;
+        this.titulo = titulo;
+        this.fechaSesion = fechaSesion;
+        this.horaInicio = horaInicio;
+        this.precio = precio;
+    }
+    
+
     public Integer getIdSesion() {
         return idSesion;
     }

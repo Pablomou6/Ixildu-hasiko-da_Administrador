@@ -309,6 +309,11 @@ public class VPrincipal extends javax.swing.JFrame {
         //desa forma, o i vai ser igual á fila que esté seleccionada na tabla. A tabla ten o noso modelo 
         Pelicula peliculaAnadir = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
         
+        if(peliculaAnadir == null) {
+            fachadaAp.muestraExcepcion("ERROR. Debes seleccionar una película.");
+            return;
+        }
+        
         //Creamos a ventana para añadir unha sesión
         VAnadirSesion vAnadirSesion = new VAnadirSesion(this, true, fachadaAp, peliculaAnadir);
         vAnadirSesion.setVisible(true);
