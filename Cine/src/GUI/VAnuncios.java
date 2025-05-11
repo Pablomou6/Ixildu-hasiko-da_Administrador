@@ -4,6 +4,9 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 /**
  *
@@ -13,7 +16,8 @@ public class VAnuncios extends javax.swing.JDialog {
     FachadaAplicacion fachadaAp;
     Sesion sesionEditar;
     VPrincipal padre;
-    ModeloListasStrings modTodosAnuncios, modRestoAnuncios, modAnunciosSesion;
+    ModeloListasStrings modRestoAnuncios, modAnunciosSesion;
+    ArrayList<Anuncio> anunciosSesion, restoAnuncios, recienAsignados, recienDisponibles;
     /**
      * Creates new form VAnuncios
      */
@@ -22,13 +26,18 @@ public class VAnuncios extends javax.swing.JDialog {
         this.fachadaAp = fa;
         this.sesionEditar = sesion;
         this.padre = (VPrincipal) parent;
-        modTodosAnuncios = new ModeloListasStrings();
         modRestoAnuncios = new ModeloListasStrings();
         modAnunciosSesion = new ModeloListasStrings();
+        anunciosSesion = new ArrayList<>();
+        restoAnuncios = new ArrayList<>();
+        recienAsignados = new ArrayList<>();
+        recienDisponibles = new ArrayList<>();
         initComponents();
         listaDisponibles.setModel(modRestoAnuncios);
         listaAsignados.setModel(modAnunciosSesion);
         //Añadir lógica para que se recuperen todos los anuncios. Una vez hecho esto, clasificarlos 
+        this.recuperarAnuncios();
+        botonAceptar.setEnabled(false);
     }
 
     /**
@@ -90,6 +99,11 @@ public class VAnuncios extends javax.swing.JDialog {
         });
 
         botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,13 +178,163 @@ public class VAnuncios extends javax.swing.JDialog {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonDrchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDrchActionPerformed
-        // TODO add your handling code here:
+        String seleccion = listaDisponibles.getSelectedValue();
+
+        if (seleccion == null) {
+            fachadaAp.muestraExcepcion("No has seleccionado ningún anuncio.");
+            return;
+        }
+
+        //Buscar en la lista original de todos los anuncios
+        Optional<Anuncio> anuncioOpt = restoAnuncios.stream()
+                .filter(a -> a.getTematica().equals(seleccion))
+                .findFirst();
+        
+        if (anuncioOpt.isEmpty()) {
+            //Puede que sea un anuncio recién desasignado que estaba en la sesión original
+            anuncioOpt = recienDisponibles.stream()
+                    .filter(a -> a.getTematica().equals(seleccion))
+                    .findFirst();
+        }
+
+        if (anuncioOpt.isPresent()) {
+            Anuncio anuncio = anuncioOpt.get();
+
+            //Si estaba en recienDisponibles (Antes estaba asignado, pero lo quitamos), lo quitamos de ahí (ya que vuelve a estar asignado, pero ya estaba al inicio)
+            if (recienDisponibles.contains(anuncio)) {
+                recienDisponibles.remove(anuncio);
+            } 
+            //Si no estaba ya asignado originalmente, es un nuevo asignado
+            else if (!anunciosSesion.contains(anuncio)) {
+                recienAsignados.add(anuncio);
+            }
+
+            //Creamos listas visuales usando estado final simulado
+            List<String> tematicasSesion = new ArrayList<>();
+            List<String> tematicasDisponibles = new ArrayList<>();
+
+            //Simulamos resultado: originales + recien asignados - recien desasignados
+            //Creamos un conjunto (no permite repetidos) con los originales, le añadimos los recién asignados y le borramos los recién desasignados
+            Set<Anuncio> anunciosAsignadosFinales = new HashSet<>(anunciosSesion);
+            anunciosAsignadosFinales.addAll(recienAsignados);
+            anunciosAsignadosFinales.removeAll(recienDisponibles);
+
+            Set<Anuncio> anunciosDisponiblesFinales = new HashSet<>(restoAnuncios);
+            anunciosDisponiblesFinales.addAll(recienDisponibles);
+            anunciosDisponiblesFinales.removeAll(recienAsignados);
+            
+            //Pasamos los conjuntos a un stream que mapeamos de forma que por cada anuncio tomamos su temática y le hacemos un collect a lista
+            tematicasSesion = anunciosAsignadosFinales.stream()
+                    .map(Anuncio::getTematica)
+                    .collect(Collectors.toList());
+
+            tematicasDisponibles = anunciosDisponiblesFinales.stream()
+                    .map(Anuncio::getTematica)
+                    .collect(Collectors.toList());
+            
+            //Actualizamos la vista previa de las listas (en caso de que se cancelase, la función que las inicializa no tendría en cuenta este cambio)
+            modAnunciosSesion.setElementos(tematicasSesion);
+            modRestoAnuncios.setElementos(tematicasDisponibles);
+        }
+        if(recienAsignados.size() != 0 || recienDisponibles.size() != 0) {
+            botonAceptar.setEnabled(true);
+        }
     }//GEN-LAST:event_botonDrchActionPerformed
 
     private void botonIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIzquierdaActionPerformed
-        // TODO add your handling code here:
+        String seleccion = listaAsignados.getSelectedValue();
+
+        if (seleccion == null) {
+            fachadaAp.muestraExcepcion("No has seleccionado ningún anuncio.");
+            return;
+        }
+
+        //Buscar en la lista original de todos los anuncios
+        Optional<Anuncio> anuncioOpt = anunciosSesion.stream()
+                .filter(a -> a.getTematica().equals(seleccion))
+                .findFirst();
+
+        if (anuncioOpt.isEmpty()) {
+            //Puede que sea un anuncio recién asignado que aún no estaba en la sesión original
+            anuncioOpt = recienAsignados.stream()
+                    .filter(a -> a.getTematica().equals(seleccion))
+                    .findFirst();
+        }
+
+        if (anuncioOpt.isPresent()) {
+            Anuncio anuncio = anuncioOpt.get();
+
+            // Si estaba en recienAsignados (lo acabábamos de asignar), lo quitamos de ahí
+            if (recienAsignados.contains(anuncio)) {
+                recienAsignados.remove(anuncio);
+            } 
+            // Si no estaba originalmente en restoAnuncios, es un nuevo desasignado
+            else if (!restoAnuncios.contains(anuncio)) {
+                recienDisponibles.add(anuncio);
+            }
+
+            // Simular estado final igual que en el otro botón
+            Set<Anuncio> anunciosAsignadosFinales = new HashSet<>(anunciosSesion);
+            anunciosAsignadosFinales.addAll(recienAsignados);
+            anunciosAsignadosFinales.removeAll(recienDisponibles);
+
+            Set<Anuncio> anunciosDisponiblesFinales = new HashSet<>(restoAnuncios);
+            anunciosDisponiblesFinales.addAll(recienDisponibles);
+            anunciosDisponiblesFinales.removeAll(recienAsignados);
+
+            List<String> tematicasSesion = anunciosAsignadosFinales.stream()
+                    .map(Anuncio::getTematica)
+                    .collect(Collectors.toList());
+
+            List<String> tematicasDisponibles = anunciosDisponiblesFinales.stream()
+                    .map(Anuncio::getTematica)
+                    .collect(Collectors.toList());
+
+            modAnunciosSesion.setElementos(tematicasSesion);
+            modRestoAnuncios.setElementos(tematicasDisponibles);
+        }
+        if(recienAsignados.size() != 0 || recienDisponibles.size() != 0) {
+            botonAceptar.setEnabled(true);
+        }
     }//GEN-LAST:event_botonIzquierdaActionPerformed
 
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        //Las funciones de los botones hacen las gestiones necesarias para diferenciar los anuncios recién introducidos y desasignados
+        if(!fachadaAp.actualizarAnunciosSesion(recienAsignados, recienDisponibles, sesionEditar)) {
+            return;
+        }
+        //Actualizamos las tablas con los anuncios más recientes
+        this.recuperarAnuncios();
+        recienAsignados.clear();
+        recienDisponibles.clear();
+        botonAceptar.setEnabled(false);
+    }//GEN-LAST:event_botonAceptarActionPerformed
+    
+    private void recuperarAnuncios() {
+        //Vamos a recuperar todos los anuncios disponibles en la base de datos
+        ArrayList<Anuncio> todosAnuncios = fachadaAp.obtenerAnuncios();
+        //Ahora, recuperamos los anuncios asignados a la sesión, de forma que ya los podemos asignar a la tabla. Además,
+        //los usamos para filtrar el resto de anuncios.
+        anunciosSesion = fachadaAp.obtenerAnunciosSesion(sesionEditar);
+        
+        //Ahora, aprovechamos para filtrar el resto de anuncios
+        restoAnuncios = new ArrayList<>(todosAnuncios);
+        restoAnuncios.removeAll(anunciosSesion); //Para usar esta forma de filtrar reimplementamos el método equals en Anuncio
+        
+        //Extraemos solo las temáticas para mostrar en las tablas. Convertimos el array en un stream y por cada anuncio obtenemos su temática.
+        //Ahora, con collect especificamos que los juntamos todos y que con Collector lo transformamos a Lista
+        List<String> tematicasSesion = anunciosSesion.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+
+        List<String> tematicasDisponibles = restoAnuncios.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+        
+        //Una vez tenemos los anuncios asignados a la sesión, los colocamos en la tabla de la derecha. Lo mismo para la tabla de la izquierda con el resto
+        modAnunciosSesion.setElementos(tematicasSesion);
+        modRestoAnuncios.setElementos(tematicasDisponibles);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;

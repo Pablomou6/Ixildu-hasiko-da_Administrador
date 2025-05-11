@@ -24,6 +24,9 @@ public class FachadaBaseDatos {
     DAOPeliculas daoPeliculas;
     DAORestauracion daoRestauracion;
     DAOInstalaciones daoInstalaciones;
+    DAOAnuncios daoAnuncios;
+    DAOAnunciar daoAnunciar;
+    DAOSesiones daoSesiones;
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -60,6 +63,9 @@ public class FachadaBaseDatos {
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
             daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
             daoInstalaciones = new DAOInstalaciones(conexionBD, fachadaAp);
+            daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
+            daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
+            daoSesiones = new DAOSesiones(conexionBD, fa);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -122,4 +128,50 @@ public class FachadaBaseDatos {
         return daoInstalaciones.obtenerEquiposSala(idSala);
     }
 
+    public Boolean editarPelicula(Pelicula peliculaEditar) {
+        //La pelicula se pasa una vez comprobada en el gestor. Va directa al DAO
+        if(!daoPeliculas.editarPelicula(peliculaEditar)) { return false; }
+        
+        return true;
+    }
+    
+    public ArrayList<Anuncio> obtenerAnuncios() {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        
+        anuncios = daoAnuncios.obtenerAnuncios();
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Anuncio> obtenerAnunciosConId(ArrayList<Integer> idAnuncio) {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        
+        anuncios = daoAnuncios.obtenerAnunciosConId(idAnuncio);
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Integer> obtenerIdAnunciosSesion(Sesion sesionEditar) {
+        ArrayList<Integer> idAnuncios = new ArrayList<>();
+        
+        idAnuncios = daoAnunciar.obtenerIdAnunciosSesion(sesionEditar);
+        
+        return idAnuncios;
+    } 
+    
+    public ArrayList<Sesion> obtenerSesiones() {
+        ArrayList<Sesion> sesiones = new ArrayList<Sesion>();
+        
+        sesiones = daoSesiones.obtenerSesiones();
+        
+        return sesiones;
+    }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosEliminar, Sesion sesionEditar) {
+        if(!daoAnunciar.actualizarAnunciosSesion(anunciosIntroducir, anunciosEliminar, sesionEditar)) {
+            return false;
+        } 
+        
+        return true;
+    }
 }

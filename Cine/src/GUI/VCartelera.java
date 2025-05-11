@@ -4,6 +4,7 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 /**
  *
@@ -24,6 +25,7 @@ public class VCartelera extends javax.swing.JDialog {
         this.modTablaSesiones = new ModeloTablaSesiones();
         tablaSesiones.setModel(modTablaSesiones);
         tablaSesiones.setFillsViewportHeight(true);
+        this.mostrarSesiones();
     }
 
     /**
@@ -68,6 +70,11 @@ public class VCartelera extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaSesiones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaSesionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaSesiones);
 
         botonSalir.setText("Salir");
@@ -186,6 +193,22 @@ public class VCartelera extends javax.swing.JDialog {
         vAnunciosSesion.setVisible(true);
     }//GEN-LAST:event_botonAnunciosActionPerformed
 
+    private void tablaSesionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSesionesMouseClicked
+        //recuperamos la sesión seleccionada
+        Sesion sesionSeleccionada = modTablaSesiones.obtenerSesion(tablaSesiones.getSelectedRow());
+        
+        textFieldIdSala.setText(sesionSeleccionada.getIdSala().toString());
+        textFieldTitulo.setText(sesionSeleccionada.getTitulo());
+        textFieldFecha.setText(sesionSeleccionada.getFechaSesion());
+        textFieldHoraInicio.setText(sesionSeleccionada.getHoraInicio());
+        textFieldPrecio.setText(sesionSeleccionada.getPrecio().toString());
+    }//GEN-LAST:event_tablaSesionesMouseClicked
+    
+    private void mostrarSesiones() {
+        ArrayList<Sesion> sesionesActuales = fachadaAp.obtenerSesiones();
+        
+        modTablaSesiones.setFilas(sesionesActuales);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnuncios;
