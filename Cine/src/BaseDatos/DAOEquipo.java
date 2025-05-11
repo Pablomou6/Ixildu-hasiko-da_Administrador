@@ -41,7 +41,7 @@ public class DAOEquipo extends AbstractDAO {
                 rs.getString("nombre"),
                 rs.getString("tipo"),
                 rs.getString("modelo"),
-                rs.getDouble("precio"),
+                rs.getFloat("precio"),
                 rs.getString("marca"),
                 rs.getDate("fechaAdquisicion").toLocalDate()
             );
