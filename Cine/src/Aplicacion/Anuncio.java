@@ -4,6 +4,14 @@
  */
 package Aplicacion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 /**
  *
  * @author alumnogreibd
@@ -42,6 +50,39 @@ public class Anuncio {
 
     public void setDuracion(String duracion) {
         this.duracion = duracion;
+    }
+    
+    public Integer getDuracionMinutos() {
+        if (duracion == null || duracion.isEmpty()) return 0;
+
+        try {
+            // Formato HH:mm:ss
+            LocalTime tiempo = LocalTime.parse(duracion);
+            int totalMinutos = tiempo.getHour() * 60 + tiempo.getMinute();
+
+            // Redondear hacia arriba si hay segundos
+            if (tiempo.getSecond() > 0) {
+                totalMinutos += 1;
+            }
+
+            return totalMinutos;
+        } catch (DateTimeParseException e) {
+            try {
+                // Formato mm:ss como alternativa
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
+                LocalTime tiempo = LocalTime.parse(duracion, formatter);
+                int totalMinutos = tiempo.getMinute();
+
+                if (tiempo.getSecond() > 0) {
+                    totalMinutos += 1;
+                }
+
+                return totalMinutos;
+            } catch (DateTimeParseException e2) {
+                System.err.println("Error al procesar duración: " + duracion);
+                return 0;
+            }
+        }
     }
     
     @Override
