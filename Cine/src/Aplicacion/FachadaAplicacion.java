@@ -185,4 +185,8 @@ public class FachadaAplicacion {
         return gestEquipo.eliminarEquipoSala(idEquipo);
     }
     
+    public boolean editarEquipoSala(int idEquipo, int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return gestEquipo.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
+    }
+    
 }

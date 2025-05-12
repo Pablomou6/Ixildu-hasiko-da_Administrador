@@ -156,7 +156,12 @@ public class VInstalaciones extends javax.swing.JDialog {
             }
         });
 
-        botonGuardar.setText("Guardar");
+        botonGuardar.setText("Editar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarActionPerformed(evt);
+            }
+        });
 
         botonBorrar.setText("Borrar");
         botonBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -403,6 +408,47 @@ public class VInstalaciones extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al procesar los datos del equipo seleccionado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonBorrarActionPerformed
+
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        // Validar que todos los campos estén completos
+        if (nombretextfield.getText().isEmpty() || tipotextfield.getText().isEmpty() || 
+            preciotextfield.getText().isEmpty() || marcatextfield.getText().isEmpty() || modelotextfield.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Obtener los datos del formulario
+            String nombre = nombretextfield.getText();
+            String tipo = tipotextfield.getText();
+            String modelo = modelotextfield.getText();
+            String marca = marcatextfield.getText();
+            double precio = Double.parseDouble(preciotextfield.getText());
+            int idSala = Integer.parseInt((String) comboBoxEquipo.getSelectedItem());
+            int selectedRow = tablaEquipo.getSelectedRow();
+
+            if (selectedRow == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un equipo para editar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener el ID del equipo seleccionado
+            int idEquipo = Integer.parseInt(tablaEquipo.getValueAt(selectedRow, 0).toString());
+
+            // Llamar a la fachada para actualizar el equipo
+            boolean exito = fachadaAp.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
+
+            if (exito) {
+                // Actualizar la tabla de equipos
+                cargarEquiposSala(idSala);
+                javax.swing.JOptionPane.showMessageDialog(this, "Equipo actualizado correctamente.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar el equipo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingrese datos válidos en los campos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonGuardarActionPerformed
     
     private void cargarSalas() {
         List<Integer> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
