@@ -67,6 +67,7 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
             case 2: resultado=trabajadores.get(row).getCargo();break;
             case 3: resultado=trabajadores.get(row).getSueldo(); break;
         }
+        
         return resultado;
     }
     

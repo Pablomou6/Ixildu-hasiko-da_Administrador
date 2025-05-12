@@ -210,6 +210,7 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+
     private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
         
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
@@ -255,6 +256,7 @@ public class VGestionPeliculas extends javax.swing.JDialog {
         textFieldFechaEstreno.setText(peliculaEditar.getFechaEstreno().toString());
         textAreaSinopsis.setText(peliculaEditar.getSinopsis());
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;

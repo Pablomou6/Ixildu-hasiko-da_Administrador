@@ -22,6 +22,9 @@ public class FachadaBaseDatos {
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
+
+    DAOTrabajadores daoTrabajadores;
+
     DAORestauracion daoRestauracion;
     DAOAnuncios daoAnuncios;
     DAOAnunciar daoAnunciar;
@@ -29,6 +32,7 @@ public class FachadaBaseDatos {
     DAOEquipo daoEquipo;
     DAOSalas daoSalas;
     DAOTrabajar daoTrabajar;
+ 
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -63,6 +67,9 @@ public class FachadaBaseDatos {
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
+ 
+            daoTrabajadores = new DAOTrabajadores(conexionBD, fachadaAp);
+
             daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
             daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
             daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
@@ -71,6 +78,7 @@ public class FachadaBaseDatos {
             daoEquipo = new DAOEquipo(conexionBD, fa);
             daoSalas = new DAOSalas(conexionBD, fa);
             daoTrabajar = new DAOTrabajar(conexionBD, fa);
+ 
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -113,6 +121,35 @@ public class FachadaBaseDatos {
         return true;
     }
     
+ 
+    public boolean insertarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSelec){
+        if(!daoTrabajadores.insertarTrabajador(trab, tipo, salasSelec)){ return false;}
+        
+        return true;
+    }
+
+    public List<Trabajador> obtenerTrabajador(String nombre, String dni) {
+        return daoTrabajadores.obtenerTrabajador(nombre,dni);        
+    }
+
+    public String obtenerTipoTrabajador(String dni) {
+        return daoTrabajadores.obtenerTipoTrabajador(dni);
+    }
+
+    public List<Integer> obtenerSalasTrabajador(String dni) {
+        return daoTrabajadores.obtenerSalasTrabajador(dni);
+    }
+
+    public boolean actualizarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSeleccionadas, ArrayList<Integer> salasNoSeleccionadas) {
+        return daoTrabajadores.actualizarTrabajador(trab,tipo,salasSeleccionadas,salasNoSeleccionadas);
+    }
+
+    public boolean eliminarTrabajador(String dni, String tipo) {
+        return daoTrabajadores.eliminarTrabajador(dni,tipo);
+    }
+
+    
+
     public void eliminarPelicula(Pelicula p) {
         daoPeliculas.eliminarPelicula(p);
     }
@@ -241,4 +278,6 @@ public class FachadaBaseDatos {
         
         return true;
     }
+ 
 }
+

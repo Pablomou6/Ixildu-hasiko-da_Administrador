@@ -469,6 +469,7 @@ public class VPrincipal extends javax.swing.JFrame {
                 "Confirmar eliminación",
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
+
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             fachadaAp.eliminarPelicula(peliculaEliminar);
         }
@@ -484,6 +485,7 @@ public class VPrincipal extends javax.swing.JFrame {
         textFieldFechaEstreno.setText("");
         textFieldDuracionTrailer.setText("");
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadirEmision;
