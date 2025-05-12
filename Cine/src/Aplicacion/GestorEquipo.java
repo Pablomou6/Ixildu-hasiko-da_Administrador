@@ -33,4 +33,8 @@ public class GestorEquipo {
         return fachadaBD.obtenerEquipoPorId(idEquipo);
     }
     
+    public boolean eliminarEquipoSala(int idEquipo) {
+        return fachadaBD.eliminarEquipoSala(idEquipo);
+    }
+    
 }

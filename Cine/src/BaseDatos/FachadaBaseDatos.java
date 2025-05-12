@@ -194,4 +194,9 @@ public class FachadaBaseDatos {
     public Equipo obtenerEquipoPorId(int idEquipo) {
         return daoEquipo.obtenerEquipoPorId(idEquipo);
     }
+    
+    public boolean eliminarEquipoSala(int idEquipo) {
+        return daoEquipo.eliminarEquipoSala(idEquipo);
+    }
+    
 }

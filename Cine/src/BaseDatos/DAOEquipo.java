@@ -118,4 +118,23 @@ public class DAOEquipo extends AbstractDAO {
         return null;
     }
     
+    public boolean eliminarEquipoSala(int idEquipo) {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            con = this.getConexion();
+            String consulta = "DELETE FROM Equipo WHERE idEquipo = ?";
+            stm = con.prepareStatement(consulta);
+            stm.setInt(1, idEquipo);
+            int filasAfectadas = stm.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            return false;
+        } finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { }
+        }
+    }
+    
 }

@@ -159,6 +159,11 @@ public class VInstalaciones extends javax.swing.JDialog {
         botonGuardar.setText("Guardar");
 
         botonBorrar.setText("Borrar");
+        botonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBorrarActionPerformed(evt);
+            }
+        });
 
         labelNuevo.setText("Nuevo:");
 
@@ -364,6 +369,40 @@ public class VInstalaciones extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingrese datos válidos en los campos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonAnadirActionPerformed
+
+    private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
+        // Validar que haya un equipo seleccionado
+        int selectedRow = tablaEquipo.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un equipo para eliminar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Obtener el ID del equipo seleccionado
+            int idEquipo = Integer.parseInt(tablaEquipo.getValueAt(selectedRow, 0).toString());
+            int idSala = Integer.parseInt((String) comboBoxEquipo.getSelectedItem()); // ID de la sala seleccionada
+
+            // Confirmar la eliminación
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este equipo?", "Confirmar eliminación", javax.swing.JOptionPane.YES_NO_OPTION);
+            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            // Llamar a la fachada para eliminar el equipo
+            boolean exito = fachadaAp.eliminarEquipoSala(idEquipo);
+
+            if (exito) {
+                // Actualizar la tabla de equipos
+                cargarEquiposSala(idSala);
+                javax.swing.JOptionPane.showMessageDialog(this, "Equipo eliminado correctamente.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el equipo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al procesar los datos del equipo seleccionado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonBorrarActionPerformed
     
     private void cargarSalas() {
         List<Integer> salas = fachadaAp.obtenerSalas(); // Obtener las salas desde la fachada
