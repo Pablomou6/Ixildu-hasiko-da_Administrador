@@ -190,4 +190,8 @@ public class FachadaBaseDatos {
     public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
         return daoEquipo.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
     }
+    
+    public Equipo obtenerEquipoPorId(int idEquipo) {
+        return daoEquipo.obtenerEquipoPorId(idEquipo);
+    }
 }

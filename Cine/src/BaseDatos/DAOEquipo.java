@@ -84,4 +84,38 @@ public class DAOEquipo extends AbstractDAO {
         }
     }
     
+    public Equipo obtenerEquipoPorId(int idEquipo) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            con = this.getConexion();
+            String consulta = "SELECT idEquipo, idSala, nombre, tipo, precio, marca, modelo, fechaAdquisicion " +
+                              "FROM Equipo WHERE idEquipo = ?";
+            stm = con.prepareStatement(consulta);
+            stm.setInt(1, idEquipo);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                return new Equipo(
+                    rs.getInt("idEquipo"),
+                    rs.getInt("idSala"),
+                    rs.getString("nombre"),
+                    rs.getString("tipo"),
+                    rs.getFloat("precio"),
+                    rs.getString("marca"),
+                    rs.getString("modelo"),
+                    rs.getDate("fechaAdquisicion").toLocalDate()
+                );
+            }
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) { }
+            try { if (stm != null) stm.close(); } catch (Exception e) { }
+        }
+        return null;
+    }
+    
 }

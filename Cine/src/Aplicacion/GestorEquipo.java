@@ -29,4 +29,8 @@ public class GestorEquipo {
         return fachadaBD.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
     }
     
+    public Equipo obtenerEquipoPorId(int idEquipo) {
+        return fachadaBD.obtenerEquipoPorId(idEquipo);
+    }
+    
 }

@@ -30,6 +30,7 @@ public class VInstalaciones extends javax.swing.JDialog {
         tablaEquipo.setFillsViewportHeight(true);
         //Lógica para que combobox muestre los id's de las salas existentes
         cargarSalas();
+        configurarTablaEquipo();
     }
 
     /**
@@ -194,7 +195,7 @@ public class VInstalaciones extends javax.swing.JDialog {
                     .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(labelNuevo)
                         .addGroup(panelEquipoLayout.createSequentialGroup()
-                            .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(panelEquipoLayout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,9 +203,10 @@ public class VInstalaciones extends javax.swing.JDialog {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel3))
                                 .addGroup(panelEquipoLayout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
                                     .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(marcatextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(marcatextfield)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(panelEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEquipoLayout.createSequentialGroup()
@@ -415,16 +417,32 @@ public class VInstalaciones extends javax.swing.JDialog {
         }
     }
     
-    
-    /*
-    private void cargarEquiposSala(int idSala) {
-    // Obtener los equipos de la sala desde la fachada
-        List<Equipo> equipos = fachadaAp.obtenerEquiposSala(idSala);
+    private void configurarTablaEquipo() {
+        // Agregar un listener para detectar selección en la tabla
+        tablaEquipo.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && tablaEquipo.getSelectedRow() != -1) {
+                int selectedRow = tablaEquipo.getSelectedRow();
+                try {
+                    // Obtener el ID del equipo seleccionado desde la tabla
+                    int idEquipo = Integer.parseInt(tablaEquipo.getValueAt(selectedRow, 0).toString());
 
-        // Actualizar el modelo de la tabla
-        modTablaEquipos.setFilas(equipos);
+                    // Consultar la base de datos para obtener todos los atributos del equipo
+                    Equipo equipo = fachadaAp.obtenerEquipoPorId(idEquipo);
+
+                    // Mostrar los datos en los TextField
+                    if (equipo != null) {
+                        nombretextfield.setText(equipo.getNombre());
+                        tipotextfield.setText(equipo.getTipo());
+                        modelotextfield.setText(equipo.getModelo());
+                        preciotextfield.setText(String.valueOf(equipo.getPrecio()));
+                        marcatextfield.setText(equipo.getMarca());
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error al cargar los datos del equipo seleccionado: " + e.getMessage());
+                }
+            }
+        });
     }
-    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnadir;
