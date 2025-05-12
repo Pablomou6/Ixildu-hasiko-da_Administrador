@@ -205,4 +205,21 @@ public class FachadaBaseDatos {
         }
         return true;
     }
+    
+    public Boolean editarSesion(Sesion sesionEditar) {
+        
+        if(!daoSesiones.editarSesion(sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        if(!daoSesiones.eliminarSesion(sesion)) {
+            return false;
+        }
+        
+        return true;
+    }
 }

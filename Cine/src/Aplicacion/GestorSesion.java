@@ -117,4 +117,32 @@ public class GestorSesion {
         
         return true;
     }
+    
+    public Boolean editarSesion(Integer idSesion, Integer idSala, String titulo, String fechaSesion, String horaInicio, Float precio) {
+        //Vamos a recuperar los anuncios y la película, para así poder validar que sea un cambio que se pueda ejecutar
+        ArrayList<Integer> idAnuncios = fachadaBD.recuperarAnunciosIdSesion(idSesion);
+        ArrayList<Anuncio> anunciosAsignados = fachadaBD.obtenerAnunciosConId(idAnuncios);
+        Pelicula peliculaAsignada = fachadaBD.buscarPeliculas(titulo, "", "", "", "", "", null, "").get(0);
+        
+        if(!validarDatosSesion(idSala, horaInicio, fechaSesion, precio, anunciosAsignados, peliculaAsignada)) {
+            return false;
+        }
+        
+        //Si los campos están bien, creamos un objeto para usarlo en la actualización
+        Sesion sesionEditar = new Sesion(idSesion, idSala, titulo, fechaSesion, horaInicio, precio);
+        
+        if(!fachadaBD.editarSesion(sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        if(!fachadaBD.eliminarSesion(sesion)) {
+            return false;
+        }
+        
+        return true;
+    }
 }

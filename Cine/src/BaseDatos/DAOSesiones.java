@@ -106,59 +106,115 @@ public class DAOSesiones extends AbstractDAO {
     
     
     public Boolean anadirSesion(Sesion sesionAnadir, ArrayList<Anuncio> anunciosAsignados) {
-    Connection con = null;
-    PreparedStatement stmSesion = null;
-    PreparedStatement stmAnuncio = null;
-    ResultSet rs = null;
+        Connection con = null;
+        PreparedStatement stmSesion = null;
+        PreparedStatement stmAnuncio = null;
+        ResultSet rs = null;
 
-    try {
-        con = this.getConexion();
-        con.setAutoCommit(false); // Iniciamos transacción
+        try {
+            con = this.getConexion();
+            con.setAutoCommit(false); // Iniciamos transacción
 
-        // Usamos RETURNING para obtener el idSesion generado
-        String consultaSesion = "INSERT INTO sesion (idSala, titulo, fechaSesion, horaInicio, precio) " +
-                                "VALUES (?, ?, ?, ?, ?) RETURNING idSesion";
+            // Usamos RETURNING para obtener el idSesion generado
+            String consultaSesion = "INSERT INTO sesion (idSala, titulo, fechaSesion, horaInicio, precio) " +
+                                    "VALUES (?, ?, ?, ?, ?) RETURNING idSesion";
 
-        stmSesion = con.prepareStatement(consultaSesion);
-        stmSesion.setInt(1, sesionAnadir.getIdSala());
-        stmSesion.setString(2, sesionAnadir.getTitulo());
-        stmSesion.setDate(3, java.sql.Date.valueOf(sesionAnadir.getFechaSesion()));
-        stmSesion.setTime(4, java.sql.Time.valueOf(sesionAnadir.getHoraInicio()));
-        stmSesion.setFloat(5, sesionAnadir.getPrecio());
+            stmSesion = con.prepareStatement(consultaSesion);
+            stmSesion.setInt(1, sesionAnadir.getIdSala());
+            stmSesion.setString(2, sesionAnadir.getTitulo());
+            stmSesion.setDate(3, java.sql.Date.valueOf(sesionAnadir.getFechaSesion()));
+            stmSesion.setTime(4, java.sql.Time.valueOf(sesionAnadir.getHoraInicio()));
+            stmSesion.setFloat(5, sesionAnadir.getPrecio());
 
-        rs = stmSesion.executeQuery();
+            rs = stmSesion.executeQuery();
 
-        Integer idSesionGenerado = null;
-        if (rs.next()) {
-            idSesionGenerado = rs.getInt(1);
-        } else {
-            throw new SQLException("No se devolvió el idSesion tras insertar la sesión.");
+            Integer idSesionGenerado = null;
+            if (rs.next()) {
+                idSesionGenerado = rs.getInt(1);
+            } else {
+                throw new SQLException("No se devolvió el idSesion tras insertar la sesión.");
+            }
+
+            //Insertar los anuncios
+            String consultaAnuncio = "INSERT INTO anunciar (idSesion, idAnuncio) VALUES (?, ?)";
+            stmAnuncio = con.prepareStatement(consultaAnuncio);
+
+            for (Anuncio anuncio : anunciosAsignados) {
+                stmAnuncio.setInt(1, idSesionGenerado);
+                stmAnuncio.setInt(2, anuncio.getIdAnuncio());
+                stmAnuncio.executeUpdate();
+            }
+
+            con.commit(); //Todo correcto
+        } 
+        catch (SQLException e) {
+            try { if (con != null) con.rollback(); } catch (SQLException ex) {}
+            this.getFachadaAplicacion().muestraExcepcion("Error al insertar sesión y anuncios: " + e.getMessage());
+            return false;
+        } 
+        finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el ResultSet."); }
+            try { if (stmSesion != null) stmSesion.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el PreparedStatement de sesion."); }
+            try { if (stmAnuncio != null) stmAnuncio.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el PreparedStatement de anuncio."); }
         }
 
-        //Insertar los anuncios
-        String consultaAnuncio = "INSERT INTO anunciar (idSesion, idAnuncio) VALUES (?, ?)";
-        stmAnuncio = con.prepareStatement(consultaAnuncio);
+        return true;
+    }
+    
+    public Boolean editarSesion(Sesion sesionEditar) {
+        Connection con = null;
+        PreparedStatement stm = null;
 
-        for (Anuncio anuncio : anunciosAsignados) {
-            stmAnuncio.setInt(1, idSesionGenerado);
-            stmAnuncio.setInt(2, anuncio.getIdAnuncio());
-            stmAnuncio.executeUpdate();
+        try {
+            con = this.getConexion();
+
+            String consulta = "UPDATE sesion SET idSala = ?, titulo = ?, fechaSesion = ?, horaInicio = ?, precio = ? " +
+                              "WHERE idSesion = ?";
+
+            stm = con.prepareStatement(consulta);
+            stm.setInt(1, sesionEditar.getIdSala());
+            stm.setString(2, sesionEditar.getTitulo());
+            stm.setDate(3, java.sql.Date.valueOf(sesionEditar.getFechaSesion())); // yyyy-MM-dd
+            stm.setTime(4, java.sql.Time.valueOf(sesionEditar.getHoraInicio()));   // HH:mm:ss
+            stm.setFloat(5, sesionEditar.getPrecio());
+            stm.setInt(6, sesionEditar.getIdSesion());
+
+            stm.executeUpdate();
+
+        } 
+        catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion("Error al editar sesión: " + e.getMessage());
+            return false;
+        } 
+        finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha podido cerrar el PreparedStatement"); }
         }
+        
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        Connection con = null;
+        PreparedStatement stm = null;
 
-        con.commit(); //Todo correcto
-    } 
-    catch (SQLException e) {
-        try { if (con != null) con.rollback(); } catch (SQLException ex) {}
-        this.getFachadaAplicacion().muestraExcepcion("Error al insertar sesión y anuncios: " + e.getMessage());
-        return false;
-    } 
-    finally {
-        try { if (rs != null) rs.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el ResultSet."); }
-        try { if (stmSesion != null) stmSesion.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el PreparedStatement de sesion."); }
-        try { if (stmAnuncio != null) stmAnuncio.close(); } catch (Exception e) { System.out.println("Error al intentar cerrar el PreparedStatement de anuncio."); }
+        try {
+            con = this.getConexion();
+
+            String consulta = "DELETE FROM sesion WHERE idSesion = ?";
+            stm = con.prepareStatement(consulta);
+            stm.setInt(1, sesion.getIdSesion());
+
+            int filasAfectadas = stm.executeUpdate();
+
+            return filasAfectadas > 0; //Devuelve true si se eliminó alguna fila
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion("Error al eliminar sesión: " + e.getMessage());
+            return false;
+        } finally {
+            try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha podido cerrar el PreparedStatement"); }
+        }
     }
 
-    return true;
-}
+
 
 }
