@@ -4,6 +4,9 @@
  */
 package Aplicacion;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  *
  * @author alumnogreibd
@@ -14,8 +17,25 @@ public class Sesion {
     private String titulo;
     private String fechaSesion;
     private String horaInicio;
-    private String horaFin;
     private Float precio;
+    
+    public Sesion(Integer idSesion, Integer idSala, String titulo, String fechaSesion, String horaInicio, Float precio) {
+        this.idSesion = idSesion;
+        this.idSala = idSala;
+        this.titulo = titulo;
+        this.fechaSesion = fechaSesion;
+        this.horaInicio = horaInicio;
+        this.precio = precio;
+    }
+
+    public Sesion(Integer idSala, String titulo, String fechaSesion, String horaInicio, Float precio) {
+        this.idSala = idSala;
+        this.titulo = titulo;
+        this.fechaSesion = fechaSesion;
+        this.horaInicio = horaInicio;
+        this.precio = precio;
+    }
+    
 
     public Integer getIdSesion() {
         return idSesion;
@@ -55,14 +75,6 @@ public class Sesion {
 
     public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
-    }
-
-    public String getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(String horaFin) {
-        this.horaFin = horaFin;
     }
 
     public Float getPrecio() {

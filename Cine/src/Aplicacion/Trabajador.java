@@ -16,6 +16,7 @@ public class Trabajador {
     private String cargo;
     private Float sueldo;
     
+
     
     public Trabajador(String nombre, String apellido1, String apellido2, String Dni, String cargo, Float sueldo){
         this.nombre = nombre;
@@ -24,6 +25,13 @@ public class Trabajador {
         this.Dni = Dni;
         this.cargo = cargo;
         this.sueldo = sueldo;
+    }
+    public Trabajador(String dni, String nombre, String cargo, Double sueldo) {
+        this.Dni = dni;
+        this.nombre = nombre;
+        this.cargo = cargo;
+        this.sueldo = sueldo.floatValue(); // Convertir Double a Float
+
     }
 
     public String getDni() {

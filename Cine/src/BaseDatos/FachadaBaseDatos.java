@@ -22,7 +22,17 @@ public class FachadaBaseDatos {
     Connection conexionBD;
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
+
     DAOTrabajadores daoTrabajadores;
+
+    DAORestauracion daoRestauracion;
+    DAOAnuncios daoAnuncios;
+    DAOAnunciar daoAnunciar;
+    DAOSesiones daoSesiones;
+    DAOEquipo daoEquipo;
+    DAOSalas daoSalas;
+    DAOTrabajar daoTrabajar;
+ 
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -57,7 +67,18 @@ public class FachadaBaseDatos {
             
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
+ 
             daoTrabajadores = new DAOTrabajadores(conexionBD, fachadaAp);
+
+            daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
+            daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
+            daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
+
+            daoSesiones = new DAOSesiones(conexionBD, fa);
+            daoEquipo = new DAOEquipo(conexionBD, fa);
+            daoSalas = new DAOSalas(conexionBD, fa);
+            daoTrabajar = new DAOTrabajar(conexionBD, fa);
+ 
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -82,7 +103,6 @@ public class FachadaBaseDatos {
         return user;
     }
     
-    //Método para acceder al DAO para buscar las películas con los atributos dados
     public List<Pelicula> buscarPeliculas(String titulo, String duracion, String genero, String sinopsis, String clasificacion, 
         String idioma, LocalDate fechaEstreno, String duracionTrailer) {
         List<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -101,6 +121,7 @@ public class FachadaBaseDatos {
         return true;
     }
     
+ 
     public boolean insertarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSelec){
         if(!daoTrabajadores.insertarTrabajador(trab, tipo, salasSelec)){ return false;}
         
@@ -128,5 +149,135 @@ public class FachadaBaseDatos {
     }
 
     
+
+    public void eliminarPelicula(Pelicula p) {
+        daoPeliculas.eliminarPelicula(p);
+    }
+
+    public boolean insertarComida(String nombre, double precio, String tamano, int stock, String descripcion) {
+        return daoRestauracion.insertarComida(nombre,precio,tamano,stock,descripcion);
+    }
+    
+    public boolean eliminarComida(int idComida) {
+        return daoRestauracion.eliminarComida(idComida);
+    }
+    
+    public List<String> obtenerComidas() {
+        return daoRestauracion.obtenerComidas();
+    }
+    
+    public List<Integer> obtenerSalas() {
+        return daoSalas.obtenerSalas();
+    }
+
+    public List<Trabajador> obtenerTrabajadoresSala(int idSala) {
+        return daoTrabajar.obtenerTrabajadoresSala(idSala);
+    }
+
+    public List<Equipo> obtenerEquiposSala(int idSala) {
+        return daoEquipo.obtenerEquiposSala(idSala);
+    }
+
+    public Boolean editarPelicula(Pelicula peliculaEditar) {
+        //La pelicula se pasa una vez comprobada en el gestor. Va directa al DAO
+        if(!daoPeliculas.editarPelicula(peliculaEditar)) { return false; }
+        
+        return true;
+    }
+    
+    public ArrayList<Anuncio> obtenerAnuncios() {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        
+        anuncios = daoAnuncios.obtenerAnuncios();
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Anuncio> obtenerAnunciosConId(ArrayList<Integer> idAnuncio) {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        
+        anuncios = daoAnuncios.obtenerAnunciosConId(idAnuncio);
+        
+        return anuncios;
+    }
+    
+    public ArrayList<Integer> obtenerIdAnunciosSesion(Sesion sesionEditar) {
+        ArrayList<Integer> idAnuncios = new ArrayList<>();
+        
+        idAnuncios = daoAnunciar.obtenerIdAnunciosSesion(sesionEditar);
+        
+        return idAnuncios;
+    } 
+    
+    public ArrayList<Sesion> obtenerSesiones() {
+        ArrayList<Sesion> sesiones = new ArrayList<Sesion>();
+        
+        sesiones = daoSesiones.obtenerSesiones();
+        
+        return sesiones;
+    }
+    
+    public Boolean actualizarAnunciosSesion(ArrayList<Anuncio> anunciosIntroducir, ArrayList<Anuncio> anunciosEliminar, Sesion sesionEditar) {
+        if(!daoAnunciar.actualizarAnunciosSesion(anunciosIntroducir, anunciosEliminar, sesionEditar)) {
+            return false;
+        } 
+        
+        return true;
+    }
+    
+    public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return daoEquipo.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
+    }
+    
+    public Equipo obtenerEquipoPorId(int idEquipo) {
+        return daoEquipo.obtenerEquipoPorId(idEquipo);
+    }
+    
+    public boolean eliminarEquipoSala(int idEquipo) {
+        return daoEquipo.eliminarEquipoSala(idEquipo);
+    }
+    
+    public boolean editarEquipoSala(int idEquipo, int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return daoEquipo.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
+    }
+  
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return daoSalas.recuperarIdsSalas();
+    }
+    
+    public ArrayList<Sesion> recuperarSesionesSalaFecha(Integer idSala, String fecha) {
+        
+        return daoSesiones.recuperarSesionesSalaFecha(idSala, fecha);
+    }
+    
+    
+    public ArrayList<Integer> recuperarAnunciosIdSesion(Integer idSesion) {
+        return daoAnunciar.recuperarAnunciosIdSesion(idSesion);
+    }
+    
+    public Boolean anadirSesion(Sesion sesionAnadir, ArrayList<Anuncio> anunciosAsignados) {
+        if(!daoSesiones.anadirSesion(sesionAnadir, anunciosAsignados)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public Boolean editarSesion(Sesion sesionEditar) {
+        
+        if(!daoSesiones.editarSesion(sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        if(!daoSesiones.eliminarSesion(sesion)) {
+            return false;
+        }
+        
+        return true;
+    }
+ 
 }
 
