@@ -21,7 +21,5 @@ public class GestorSala {
         this.fachadaBD = fbd;
     }
     
-    public ArrayList<Integer> recuperarIdsSalas() {
-        return fachadaBD.recuperarIdsSalas();
-    }
+    
 }

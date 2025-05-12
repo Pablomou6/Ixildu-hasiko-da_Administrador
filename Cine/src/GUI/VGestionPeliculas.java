@@ -214,8 +214,7 @@ public class VGestionPeliculas extends javax.swing.JDialog {
     private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
         
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
-                "¿Estás seguro de que deseas eliminar la película '" + peliculaEditar.getTitulo() + "'?\n" +
-                "Se eliminarán también las asociaciones en las tablas Sesion, Valorar y Anuncio.",
+                "¿Estás seguro de que deseas eliminar la película '" + peliculaEditar.getTitulo() + "'?\n",
                 "Confirmar eliminación",
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
@@ -223,7 +222,6 @@ public class VGestionPeliculas extends javax.swing.JDialog {
             fachadaAp.eliminarPelicula(peliculaEditar);
             this.dispose();
         }
-        
     }//GEN-LAST:event_botonBorrarActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed

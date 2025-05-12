@@ -6,6 +6,7 @@ package Aplicacion;
 
 import BaseDatos.FachadaBaseDatos;
 import GUI.FachadaGUI;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -23,5 +24,9 @@ public class GestorSalas {
     
     public List<Integer> obtenerSalas() {
         return fachadaBD.obtenerSalas();
+    }
+    
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return fachadaBD.recuperarIdsSalas();
     }
 }

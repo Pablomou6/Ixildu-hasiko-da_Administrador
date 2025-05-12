@@ -227,7 +227,7 @@ public class FachadaAplicacion {
     
     
     public ArrayList<Integer> recuperarIdsSalas() {
-        return gestSala.recuperarIdsSalas();
+        return gestSalas.recuperarIdsSalas();
     }
     
     public Boolean anadirSesion(Integer idSala, String horaInicio, String fecha, Float precio, ArrayList<Anuncio> anunciosAsignados, Pelicula peliculaAnadir) {
