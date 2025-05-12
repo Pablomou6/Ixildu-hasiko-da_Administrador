@@ -69,5 +69,15 @@ public class GestorTrabajador {
     public List<Integer> obtenerSalasTrabajador(String dni) {
         return fachadaBD.obtenerSalasTrabajador(dni);
     }
+
+    public boolean actualizarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSeleccionadas, ArrayList<Integer> salasNoSeleccionadas) {
+        return fachadaBD.actualizarTrabajador(trab,tipo,salasSeleccionadas,salasNoSeleccionadas);
+    }
+
+    public boolean eliminarTrabajador(String dni, String tipo) {
+        return fachadaBD.eliminarTrabajador(dni,tipo);
+    }
+
+    
     
 }

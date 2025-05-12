@@ -118,5 +118,15 @@ public class FachadaBaseDatos {
     public List<Integer> obtenerSalasTrabajador(String dni) {
         return daoTrabajadores.obtenerSalasTrabajador(dni);
     }
+
+    public boolean actualizarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSeleccionadas, ArrayList<Integer> salasNoSeleccionadas) {
+        return daoTrabajadores.actualizarTrabajador(trab,tipo,salasSeleccionadas,salasNoSeleccionadas);
+    }
+
+    public boolean eliminarTrabajador(String dni, String tipo) {
+        return daoTrabajadores.eliminarTrabajador(dni,tipo);
+    }
+
+    
 }
 

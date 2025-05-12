@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package GUI;
+
 import Aplicacion.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,8 +16,10 @@ import javax.swing.JOptionPane;
  * @author alumnogreibd
  */
 public class VRecursosHumanos extends javax.swing.JDialog {
+
     FachadaAplicacion fachadaAp;
     ModeloTablaTrabajadores modTablaTrabajadores;
+
     /**
      * Creates new form VRecursosHumanos
      */
@@ -29,6 +32,9 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         tablaTrabajadores.setFillsViewportHeight(true);
         //Lógica para coller os valores do enum
     }
+
+    boolean insertarTrabajador = false;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,6 +127,11 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         });
 
         botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         labelDniDatos.setText("DNI:");
 
@@ -138,7 +149,7 @@ public class VRecursosHumanos extends javax.swing.JDialog {
 
         labelSala.setText("Salas:");
 
-        comboBoxTrabajo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Limpieza", "Proyección" }));
+        comboBoxTrabajo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Limpieza", "Proyeccion" }));
         comboBoxTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxTrabajoActionPerformed(evt);
@@ -311,18 +322,20 @@ public class VRecursosHumanos extends javax.swing.JDialog {
 
     private void visualizarDatosTrabajadores(ModeloTablaTrabajadores m) {
         Trabajador trab = m.obtenerTrabajador(tablaTrabajadores.getSelectedRow());
-        
+
         texFieldDniDatos.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getDni());
         textFieldNombreDatos.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getNombre());
         textFieldAp1.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getApellido1());
         textFieldAp2.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getApellido2());
         textFieldCargo.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getCargo());
         textFieldSueldo.setText(m.obtenerTrabajador(tablaTrabajadores.getSelectedRow()).getSueldo().toString());
-        
+
         // Obtener el tipo y marcarlo en el comboBox
         String tipo = fachadaAp.obtenerTipoTrabajador(trab.getDni());
+        System.out.println("tipo: " + tipo);
+
         comboBoxTrabajo.setSelectedItem(tipo);
-        
+
         // Obtener salas y marcar los checkboxes
         List<Integer> salasAsignadas = fachadaAp.obtenerSalasTrabajador(trab.getDni());
         cbSala1.setSelected(salasAsignadas.contains(1));
@@ -330,14 +343,13 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         cbSala3.setSelected(salasAsignadas.contains(3));
         cbSala4.setSelected(salasAsignadas.contains(4));
         cbSala5.setSelected(salasAsignadas.contains(5));
-        
-        
+
     }
-    
+
     private void buscarTrabajadores() {
         ModeloTablaTrabajadores m;
 
-        m=(ModeloTablaTrabajadores) tablaTrabajadores.getModel();
+        m = (ModeloTablaTrabajadores) tablaTrabajadores.getModel();
         m.setFilas(fachadaAp.obtenerTrabajador(textFieldNombre.getText(), textFieldDNI.getText()));
         if (m.getRowCount() > 0) {
             tablaTrabajadores.setRowSelectionInterval(0, 0);
@@ -345,7 +357,7 @@ public class VRecursosHumanos extends javax.swing.JDialog {
             visualizarDatosTrabajadores(m);
             botonGuardar.setEnabled(true);
             botonEliminar.setEnabled(true);
-           
+
             // Hacer clic en la lista
             tablaTrabajadores.addMouseListener(new MouseAdapter() {
                 @Override
@@ -355,24 +367,21 @@ public class VRecursosHumanos extends javax.swing.JDialog {
                         int column = tablaTrabajadores.columnAtPoint(e.getPoint());
                         Object value = tablaTrabajadores.getValueAt(row, column);
                         System.out.println("Clicked on row: " + row + ", column: " + column + "\nValue: " + value);
-                        
+
                         ModeloTablaTrabajadores mtu = (ModeloTablaTrabajadores) tablaTrabajadores.getModel();
-        
-                        
+
                         mtu.obtenerTrabajador(tablaTrabajadores.getSelectedRow());
                         visualizarDatosTrabajadores(mtu);
                     }
                 }
             });
-        }
-        else{
+        } else {
             botonGuardar.setEnabled(false);
             botonEliminar.setEnabled(false);
         }
-    }   
-    
-    
-    
+    }
+
+
     private void textFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldNombreActionPerformed
@@ -381,13 +390,43 @@ public class VRecursosHumanos extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
-    
+
     private void alerta(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private void botonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoActionPerformed
-        
+        // TODO add your handling code here:
+        insertarTrabajador = true;
+
+        textFieldNombreDatos.setText("");
+        textFieldAp1.setText("");
+        texFieldDniDatos.setText("");
+        textFieldSueldo.setText("");
+        textFieldAp2.setText("");
+        textFieldCargo.setText("");
+        comboBoxTrabajo.setSelectedItem(null);
+
+        texFieldDniDatos.setEditable(true);
+        textFieldNombreDatos.setEditable(true);
+        textFieldAp1.setEditable(true);
+        textFieldAp2.setEditable(true);
+        textFieldCargo.setEditable(true);
+        textFieldSueldo.setEditable(true);
+        comboBoxTrabajo.setEnabled(true);
+        comboBoxTrabajo.setEditable(true);
+        cbSala1.setEnabled(true);
+        cbSala2.setEnabled(true);
+        cbSala3.setEnabled(true);
+        cbSala4.setEnabled(true);
+        cbSala5.setEnabled(true);
+
+        cbSala1.setSelected(false);
+        cbSala2.setSelected(false);
+        cbSala3.setSelected(false);
+        cbSala4.setSelected(false);
+        cbSala5.setSelected(false);
+        alerta("Rellena los campos para añadir un nuevo usuario", "Info");
     }//GEN-LAST:event_botonNuevoActionPerformed
 
     private void comboBoxTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTrabajoActionPerformed
@@ -395,44 +434,96 @@ public class VRecursosHumanos extends javax.swing.JDialog {
     }//GEN-LAST:event_comboBoxTrabajoActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+
         String nombre = textFieldNombreDatos.getText();
         String ap1 = textFieldAp1.getText();
         String dni = texFieldDniDatos.getText();
         Float sueldo = Float.parseFloat(textFieldSueldo.getText());
         String ap2 = textFieldAp2.getText();
         String cargo = textFieldCargo.getText();
-        Trabajador trab = new Trabajador(nombre,ap1,ap2,dni,cargo,sueldo);
+        Trabajador trab = new Trabajador(nombre, ap1, ap2, dni, cargo, sueldo);
         String tipo = comboBoxTrabajo.getSelectedItem().toString();
         ArrayList<Integer> salasSeleccionadas = new ArrayList<>();
-        if (cbSala1.isSelected()) salasSeleccionadas.add(1);
-        if (cbSala2.isSelected()) salasSeleccionadas.add(2);
-        if (cbSala3.isSelected()) salasSeleccionadas.add(3);
-        if (cbSala4.isSelected()) salasSeleccionadas.add(4);
-        if (cbSala5.isSelected()) salasSeleccionadas.add(5);
-        
-        if (nombre == null || nombre.isEmpty() ||
-            ap1 == null || ap1.isEmpty() ||
-            ap2 == null || ap2.isEmpty() ||
-            dni == null || dni.isEmpty() ||
-            cargo == null || cargo.isEmpty() ||
-            sueldo == null || sueldo.toString().isEmpty()){
-            
-            System.out.println("Nombre: " + nombre);
-            System.out.println("Apellido 1: " + ap1);
-            System.out.println("Apellido 2: " + ap2);
-            System.out.println("DNI: " + dni);
-            System.out.println("Cargo: " + cargo);
-            System.out.println("Sueldo: " + sueldo);
-            
-            alerta("Rellena todos los campos, por favor", "Error");
-            return;
-        }        
-        fachadaAp.insertarTrabajador(trab,tipo,salasSeleccionadas);
+
+        ArrayList<Integer> salasNoseleccionadas = new ArrayList<>();
+
+        if (cbSala1.isSelected()) {
+            salasSeleccionadas.add(1);
+        } else {
+            salasNoseleccionadas.add(1);
+        }
+        if (cbSala2.isSelected()) {
+            salasSeleccionadas.add(2);
+        } else {
+            salasNoseleccionadas.add(2);
+        }
+        if (cbSala3.isSelected()) {
+            salasSeleccionadas.add(3);
+        } else {
+            salasNoseleccionadas.add(3);
+        }
+        if (cbSala4.isSelected()) {
+            salasSeleccionadas.add(4);
+        } else {
+            salasNoseleccionadas.add(4);
+        }
+        if (cbSala5.isSelected()) {
+            salasSeleccionadas.add(5);
+        } else {
+            salasNoseleccionadas.add(5);
+        }
+
+        if (insertarTrabajador == false) {
+            fachadaAp.actualizarTrabajador(trab, tipo, salasSeleccionadas, salasNoseleccionadas);
+            botonBuscar.doClick();
+        } else {
+            if (nombre == null || nombre.isEmpty()
+                    || ap1 == null || ap1.isEmpty()
+                    || ap2 == null || ap2.isEmpty()
+                    || dni == null || dni.isEmpty()
+                    || cargo == null || cargo.isEmpty()
+                    || sueldo == null || sueldo.toString().isEmpty()) {
+
+                System.out.println("Nombre: " + nombre);
+                System.out.println("Apellido 1: " + ap1);
+                System.out.println("Apellido 2: " + ap2);
+                System.out.println("DNI: " + dni);
+                System.out.println("Cargo: " + cargo);
+                System.out.println("Sueldo: " + sueldo);
+
+                alerta("Rellena todos los campos, por favor", "Error");
+                return;
+            }
+            fachadaAp.insertarTrabajador(trab, tipo, salasSeleccionadas);
+            botonBuscar.doClick();
+        }
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         buscarTrabajadores();
+        texFieldDniDatos.setEditable(false);
+        textFieldNombreDatos.setEditable(true);
+        textFieldAp1.setEditable(true);
+        textFieldAp2.setEditable(true);
+        textFieldCargo.setEditable(true);
+        textFieldSueldo.setEditable(true);
+        comboBoxTrabajo.setEnabled(false);
+        cbSala1.setEnabled(true);
+        cbSala2.setEnabled(true);
+        cbSala3.setEnabled(true);
+        cbSala4.setEnabled(true);
+        cbSala5.setEnabled(true);
+
+        insertarTrabajador = false;
     }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        String dni = texFieldDniDatos.getText();
+        String tipo = comboBoxTrabajo.getSelectedItem().toString();
+
+        fachadaAp.eliminarTrabajador(dni, tipo);
+        botonBuscar.doClick();
+    }//GEN-LAST:event_botonEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

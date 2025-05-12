@@ -93,5 +93,15 @@ public class FachadaAplicacion {
     public List<Integer> obtenerSalasTrabajador(String dni) {
         return gestTrabajador.obtenerSalasTrabajador(dni);
     }
+
+    public boolean actualizarTrabajador(Trabajador trab, String tipo, ArrayList<Integer> salasSeleccionadas, ArrayList<Integer> salasNoSeleccionadas) {
+        return gestTrabajador.actualizarTrabajador(trab,tipo,salasSeleccionadas,salasNoSeleccionadas);
+    }
+
+    public boolean eliminarTrabajador(String dni, String tipo) {
+        return gestTrabajador.eliminarTrabajador(dni,tipo);
+    }
+
+    
     
 }
