@@ -189,4 +189,31 @@ public class FachadaAplicacion {
         return gestEquipo.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
     }
     
+    
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return gestSala.recuperarIdsSalas();
+    }
+    
+    public Boolean anadirSesion(Integer idSala, String horaInicio, String fecha, Float precio, ArrayList<Anuncio> anunciosAsignados, Pelicula peliculaAnadir) {
+        
+        if(!gestSesion.anadirSesion(idSala, horaInicio, fecha, precio, anunciosAsignados, peliculaAnadir)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public Boolean editarSesion(Integer idSesion, Integer idSala, String titulo, String fechaSesion, String horaInicio, Float precio) {
+        if(!gestSesion.editarSesion(idSesion, idSala, titulo, fechaSesion, horaInicio, precio)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        if(!gestSesion.eliminarSesion(sesion)) {
+            return false;
+        }
+        return true;
+    }
 }

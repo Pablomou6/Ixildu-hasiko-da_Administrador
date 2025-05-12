@@ -4,7 +4,9 @@
  */
 package GUI;
 import Aplicacion.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -15,7 +17,8 @@ public class VAnadirSesion extends javax.swing.JDialog {
     FachadaAplicacion fachadaAp;
     VPrincipal padre;
     Pelicula peliculaAnadir;
-    ModeloListasStrings modTodosAnuncios, modRestoAnuncios, modAnunciosSesion;
+    ModeloListasStrings modRestoAnuncios, modAnunciosSesion;
+    ArrayList<Anuncio> recienAsignados, anunciosDisponibles;
 
     /**
      * Creates new form VAnadirSesion
@@ -26,13 +29,15 @@ public class VAnadirSesion extends javax.swing.JDialog {
         padre = (VPrincipal) parent;
         this.peliculaAnadir = pelicula;
         initComponents();
-        modTodosAnuncios = new ModeloListasStrings();
         modRestoAnuncios = new ModeloListasStrings();
         modAnunciosSesion = new ModeloListasStrings();
+        recienAsignados = new ArrayList<>();
+        anunciosDisponibles = new ArrayList<>(); 
         listaDisponibles.setModel(modRestoAnuncios);
         listaAsignados.setModel(modAnunciosSesion);
         //Añadir lógica para que se recuperen todos los anuncios. Una vez hecho esto, clasificarlos 
-        //cargarSalasEnComboBox();
+        this.cargarSalasEnComboBox();
+        this.recuperarAnuncios();
     }
 
     /**
@@ -53,7 +58,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
         labelPrecio = new javax.swing.JLabel();
         textFieldHoraInicio = new javax.swing.JTextField();
         textFieldFecha = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbSala = new javax.swing.JComboBox<>();
         textFieldPrecio = new javax.swing.JTextField();
         panelAnuncios = new javax.swing.JPanel();
         labelDisponibles = new javax.swing.JLabel();
@@ -63,7 +68,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaAsignados = new javax.swing.JList<>();
         botonDerecha = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonIzq = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
 
@@ -80,7 +85,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
 
         labelPrecio.setText("Precio:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout panelSesionLayout = new javax.swing.GroupLayout(panelSesion);
         panelSesion.setLayout(panelSesionLayout);
@@ -96,7 +101,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
                     .addGroup(panelSesionLayout.createSequentialGroup()
                         .addComponent(labelSala)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cbSala, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelSesionLayout.createSequentialGroup()
@@ -117,7 +122,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
                     .addComponent(labelSala)
                     .addComponent(labelInicio)
                     .addComponent(textFieldHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFecha)
@@ -154,10 +159,10 @@ public class VAnadirSesion extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/flechaI.jpg"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/flechaI.jpg"))); // NOI18N
+        botonIzq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonIzqActionPerformed(evt);
             }
         });
 
@@ -180,7 +185,7 @@ public class VAnadirSesion extends javax.swing.JDialog {
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAnunciosLayout.createSequentialGroup()
                         .addGroup(panelAnunciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
+                            .addComponent(botonIzq)
                             .addComponent(botonDerecha))
                         .addGap(46, 46, 46)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,13 +206,18 @@ public class VAnadirSesion extends javax.swing.JDialog {
                         .addGap(23, 23, 23)
                         .addComponent(botonDerecha)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(botonIzq)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Anuncios sesión", panelAnuncios);
 
         botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -250,41 +260,117 @@ public class VAnadirSesion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    /*private void cargarSalasEnComboBox() {
-        List<String> nombresSalas = fachadaAp.obtenerNombresSalas();
-        DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
-
-        for (String nombreSala : nombresSalas) {
-            modeloCombo.addElement(nombreSala);
-        }
-
-        jComboBox1.setModel(modeloCombo);
-    }*/
-    
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
+    private void actualizarListas() {
+        List<String> tematicasDisponibles = anunciosDisponibles.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+
+        List<String> tematicasAsignadas = recienAsignados.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+
+        modRestoAnuncios.setElementos(tematicasDisponibles);
+        modAnunciosSesion.setElementos(tematicasAsignadas);
+    }
+    
     private void botonDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDerechaActionPerformed
-        // TODO add your handling code here:
-        
-        
+        List<String> seleccionados = listaDisponibles.getSelectedValuesList();
+
+        if (seleccionados != null && !seleccionados.isEmpty()) {
+            for (String tematica : seleccionados) {
+                //Buscar el anuncio correspondiente
+                Anuncio anuncio = anunciosDisponibles.stream()
+                        .filter(a -> a.getTematica().equals(tematica))
+                        .findFirst()
+                        .orElse(null);
+
+                if (anuncio != null) {
+                    recienAsignados.add(anuncio);
+                    anunciosDisponibles.remove(anuncio);
+                }
+            }
+
+            //Actualizar modelos
+            actualizarListas();
+        }
     }//GEN-LAST:event_botonDerechaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void botonIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIzqActionPerformed
+        List<String> seleccionados = listaAsignados.getSelectedValuesList();
 
+        if (seleccionados != null && !seleccionados.isEmpty()) {
+            for (String tematica : seleccionados) {
+                //Buscar el anuncio correspondiente
+                Anuncio anuncio = recienAsignados.stream()
+                        .filter(a -> a.getTematica().equals(tematica))
+                        .findFirst()
+                        .orElse(null);
+
+                if (anuncio != null) {
+                    anunciosDisponibles.add(anuncio);
+                    recienAsignados.remove(anuncio);
+                }
+            }
+
+            //Actualizar modelos
+            actualizarListas();
+        }
+    }//GEN-LAST:event_botonIzqActionPerformed
+
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        //recuperamos la información necesaria
+        Integer idSala = Integer.parseInt((String) cbSala.getSelectedItem());
+        String horaInicio = textFieldHoraInicio.getText();
+        String fecha = textFieldFecha.getText();
+        Float precio = Float.parseFloat(textFieldPrecio.getText());
+        ArrayList<Anuncio> anunciosAsignados = recienAsignados;
+        
+        if(!fachadaAp.anadirSesion(idSala, horaInicio, fecha, precio, anunciosAsignados, peliculaAnadir)) {
+            return;
+        }
+        
+        this.dispose();
+    }//GEN-LAST:event_botonAceptarActionPerformed
+    
+    private void cargarSalasEnComboBox() {
+        ArrayList<Integer> idsSalas = fachadaAp.recuperarIdsSalas();
+        
+        DefaultComboBoxModel<String> salasExistentes = new DefaultComboBoxModel<>();
+        for(Integer num : idsSalas) {
+            salasExistentes.addElement(num.toString());
+        }
+        cbSala.setModel(salasExistentes);
+    }
+    
+    private void recuperarAnuncios() {
+        //Vamos a recuperar todos los anuncios disponibles en la base de datos
+        ArrayList<Anuncio> todosAnuncios = fachadaAp.obtenerAnuncios();
+        //Ponemos los anuncios disponibles (todos)
+        anunciosDisponibles = new ArrayList<>(todosAnuncios);
+        
+        //Exrtaemos la temática para mostrar en las listas
+        List<String> tematicasDisponibles = anunciosDisponibles.stream()
+                .map(Anuncio::getTematica)
+                .collect(Collectors.toList());
+        ArrayList<String> tematicasAsignadas = new ArrayList<>();
+        
+        //Asignamos el modelo a cada lista (en la lista asignados no habrá nada, ya que estamos creando la sesión)
+        modRestoAnuncios.setElementos(tematicasDisponibles);
+        modAnunciosSesion.setElementos(tematicasAsignadas);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonDerecha;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton botonIzq;
+    private javax.swing.JComboBox<String> cbSala;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

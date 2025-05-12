@@ -66,6 +66,7 @@ public class FachadaBaseDatos {
             daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
             daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
             daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
+
             daoSesiones = new DAOSesiones(conexionBD, fa);
             daoEquipo = new DAOEquipo(conexionBD, fa);
             daoSalas = new DAOSalas(conexionBD, fa);
@@ -201,5 +202,43 @@ public class FachadaBaseDatos {
     
     public boolean editarEquipoSala(int idEquipo, int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
         return daoEquipo.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
+    }
+  
+    public ArrayList<Integer> recuperarIdsSalas() {
+        return daoSalas.recuperarIdsSalas();
+    }
+    
+    public ArrayList<Sesion> recuperarSesionesSalaFecha(Integer idSala, String fecha) {
+        
+        return daoSesiones.recuperarSesionesSalaFecha(idSala, fecha);
+    }
+    
+    
+    public ArrayList<Integer> recuperarAnunciosIdSesion(Integer idSesion) {
+        return daoAnunciar.recuperarAnunciosIdSesion(idSesion);
+    }
+    
+    public Boolean anadirSesion(Sesion sesionAnadir, ArrayList<Anuncio> anunciosAsignados) {
+        if(!daoSesiones.anadirSesion(sesionAnadir, anunciosAsignados)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public Boolean editarSesion(Sesion sesionEditar) {
+        
+        if(!daoSesiones.editarSesion(sesionEditar)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public Boolean eliminarSesion(Sesion sesion) {
+        if(!daoSesiones.eliminarSesion(sesion)) {
+            return false;
+        }
+        
+        return true;
     }
 }

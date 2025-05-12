@@ -6,6 +6,7 @@ package GUI;
 import Aplicacion.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author alumnogreibd
@@ -53,6 +54,7 @@ public class VCartelera extends javax.swing.JDialog {
         textFieldHoraInicio = new javax.swing.JTextField();
         textFieldPrecio = new javax.swing.JTextField();
         botonAnuncios = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,11 +97,23 @@ public class VCartelera extends javax.swing.JDialog {
         labelPrecio.setText("Precio:");
 
         botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEditarActionPerformed(evt);
+            }
+        });
 
         botonAnuncios.setText("Anuncios");
         botonAnuncios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAnunciosActionPerformed(evt);
+            }
+        });
+
+        botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
             }
         });
 
@@ -112,6 +126,8 @@ public class VCartelera extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonEliminar)
+                        .addGap(18, 18, 18)
                         .addComponent(botonAnuncios)
                         .addGap(18, 18, 18)
                         .addComponent(botonEditar)
@@ -173,7 +189,8 @@ public class VCartelera extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSalir)
                     .addComponent(botonEditar)
-                    .addComponent(botonAnuncios))
+                    .addComponent(botonAnuncios)
+                    .addComponent(botonEliminar))
                 .addContainerGap())
         );
 
@@ -203,6 +220,26 @@ public class VCartelera extends javax.swing.JDialog {
         textFieldHoraInicio.setText(sesionSeleccionada.getHoraInicio());
         textFieldPrecio.setText(sesionSeleccionada.getPrecio().toString());
     }//GEN-LAST:event_tablaSesionesMouseClicked
+
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        //Pasamos los atributos que pueden haber sido modificados junto con el id de la sala    
+        if(!fachadaAp.editarSesion(modTablaSesiones.obtenerSesion(tablaSesiones.getSelectedRow()).getIdSesion(), Integer.parseInt(textFieldIdSala.getText()), 
+                textFieldTitulo.getText(), textFieldFecha.getText(), textFieldHoraInicio.getText(), Float.parseFloat(textFieldPrecio.getText()))) {
+            return;
+        }
+        
+        this.mostrarSesiones();
+        JOptionPane.showMessageDialog(null, "Cambio completado. Se debe notificar a los usuarios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_botonEditarActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        //Se pasa la sesión que está seleccionada en la tabla
+        if(!fachadaAp.eliminarSesion(modTablaSesiones.obtenerSesion(tablaSesiones.getSelectedRow()))) {
+            return;
+        }
+        
+        this.mostrarSesiones();
+    }//GEN-LAST:event_botonEliminarActionPerformed
     
     private void mostrarSesiones() {
         ArrayList<Sesion> sesionesActuales = fachadaAp.obtenerSesiones();
@@ -213,6 +250,7 @@ public class VCartelera extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAnuncios;
     private javax.swing.JButton botonEditar;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelFecha;
