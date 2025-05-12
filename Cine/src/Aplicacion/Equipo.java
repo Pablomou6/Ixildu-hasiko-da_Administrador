@@ -20,11 +20,25 @@ public class Equipo {
     private String modelo;
     private LocalDate fechaAdquisicion;
     
-    public Equipo(Integer idEquipo, String nombre, String tipo, String modelo) {
+    public Equipo(Integer idEquipo, String nombre, String tipo, String modelo, Float precio, String marca, LocalDate fechaAdquisicion) {
         this.idEquipo = idEquipo;
         this.nombre = nombre;
         this.tipo = tipo;
         this.modelo = modelo;
+        this.precio = precio;
+        this.marca = marca;
+        this.fechaAdquisicion = fechaAdquisicion;
+    }
+    
+    public Equipo(Integer idEquipo, Integer idSala, String nombre, String tipo, Float precio, String marca, String modelo, LocalDate fechaAdquisicion) {
+        this.idEquipo = idEquipo;
+        this.idSala = idSala;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.precio = precio;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.fechaAdquisicion = fechaAdquisicion;
     }
 
     public Integer getIdEquipo() {

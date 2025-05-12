@@ -23,11 +23,12 @@ public class FachadaBaseDatos {
     DAOUsuarios daoUsuarios;
     DAOPeliculas daoPeliculas;
     DAORestauracion daoRestauracion;
-    DAOInstalaciones daoInstalaciones;
     DAOAnuncios daoAnuncios;
     DAOAnunciar daoAnunciar;
     DAOSesiones daoSesiones;
+    DAOEquipo daoEquipo;
     DAOSalas daoSalas;
+    DAOTrabajar daoTrabajar;
     
     public FachadaBaseDatos(FachadaAplicacion fa) {
         this.fachadaAp = fa; // Inicializamos la referencia a la fachada de aplicación
@@ -63,11 +64,13 @@ public class FachadaBaseDatos {
             daoUsuarios = new DAOUsuarios(conexionBD, fachadaAp);
             daoPeliculas = new DAOPeliculas(conexionBD, fachadaAp);
             daoRestauracion = new DAORestauracion(conexionBD, fachadaAp);
-            daoInstalaciones = new DAOInstalaciones(conexionBD, fachadaAp);
             daoAnuncios = new DAOAnuncios(conexionBD, fachadaAp);
             daoAnunciar = new DAOAnunciar(conexionBD, fachadaAp);
-            daoSesiones = new DAOSesiones(conexionBD, fachadaAp);
-            daoSalas = new DAOSalas(conexionBD, fachadaAp);
+
+            daoSesiones = new DAOSesiones(conexionBD, fa);
+            daoEquipo = new DAOEquipo(conexionBD, fa);
+            daoSalas = new DAOSalas(conexionBD, fa);
+            daoTrabajar = new DAOTrabajar(conexionBD, fa);
 
         } catch (FileNotFoundException f) {
             System.out.println("Archivo de configuración no encontrado: " + f.getMessage());
@@ -126,16 +129,16 @@ public class FachadaBaseDatos {
         return daoRestauracion.obtenerComidas();
     }
     
-    public List<String> obtenerSalas() {
-        return daoInstalaciones.obtenerSalas();
+    public List<Integer> obtenerSalas() {
+        return daoSalas.obtenerSalas();
     }
 
-    public List<Trabajador> obtenerTrabajadoresSala(String idSala) {
-        return daoInstalaciones.obtenerTrabajadoresSala(idSala);
+    public List<Trabajador> obtenerTrabajadoresSala(int idSala) {
+        return daoTrabajar.obtenerTrabajadoresSala(idSala);
     }
 
-    public List<Equipo> obtenerEquiposSala(String idSala) {
-        return daoInstalaciones.obtenerEquiposSala(idSala);
+    public List<Equipo> obtenerEquiposSala(int idSala) {
+        return daoEquipo.obtenerEquiposSala(idSala);
     }
 
     public Boolean editarPelicula(Pelicula peliculaEditar) {
@@ -185,6 +188,22 @@ public class FachadaBaseDatos {
         return true;
     }
     
+    public boolean anadirEquipoSala(int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return daoEquipo.anadirEquipoSala(idSala, nombre, tipo, modelo, precio, marca);
+    }
+    
+    public Equipo obtenerEquipoPorId(int idEquipo) {
+        return daoEquipo.obtenerEquipoPorId(idEquipo);
+    }
+    
+    public boolean eliminarEquipoSala(int idEquipo) {
+        return daoEquipo.eliminarEquipoSala(idEquipo);
+    }
+    
+    public boolean editarEquipoSala(int idEquipo, int idSala, String nombre, String tipo, String modelo, double precio, String marca) {
+        return daoEquipo.editarEquipoSala(idEquipo, idSala, nombre, tipo, modelo, precio, marca);
+    }
+  
     public ArrayList<Integer> recuperarIdsSalas() {
         return daoSalas.recuperarIdsSalas();
     }
