@@ -71,6 +71,9 @@ public class VPrincipal extends javax.swing.JFrame {
         botonAñadir = new javax.swing.JButton();
         botonEditar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textAreaSalas = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuAdministracion = new javax.swing.JMenu();
         menuItemCartelera = new javax.swing.JMenuItem();
@@ -125,6 +128,11 @@ public class VPrincipal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaPeliculas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaPeliculasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaPeliculas);
 
         botonSalir.setText("Salir");
@@ -154,6 +162,14 @@ public class VPrincipal extends javax.swing.JFrame {
                 botonEliminarActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Salas película (Num sesións):");
+
+        textAreaSalas.setColumns(20);
+        textAreaSalas.setLineWrap(true);
+        textAreaSalas.setRows(5);
+        textAreaSalas.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(textAreaSalas);
 
         menuAdministracion.setText("Administración cine");
         menuAdministracion.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
@@ -252,11 +268,14 @@ public class VPrincipal extends javax.swing.JFrame {
                                                 .addComponent(botonAnadirEmision))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(72, 72, 72)
-                                                .addComponent(botonBuscar)))))))
-                        .addContainerGap(29, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))))
+                                                .addComponent(botonBuscar))))))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane3))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,8 +309,12 @@ public class VPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(botonAnadirEmision)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSalir)
                     .addComponent(botonAñadir)
@@ -474,6 +497,10 @@ public class VPrincipal extends javax.swing.JFrame {
             fachadaAp.eliminarPelicula(peliculaEliminar);
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void tablaPeliculasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPeliculasMouseClicked
+        Pelicula pelicula = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
+    }//GEN-LAST:event_tablaPeliculasMouseClicked
     
     private void limpiarTextField() {
         textFieldTitulo.setText("");
@@ -494,9 +521,11 @@ public class VPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonEditar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonSalir;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelClasificacion;
     private javax.swing.JLabel labelDuracion;
     private javax.swing.JLabel labelDuracionTrailer;
@@ -511,6 +540,7 @@ public class VPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemRRHH;
     private javax.swing.JMenuItem menuItemRestauracion;
     private javax.swing.JTable tablaPeliculas;
+    private javax.swing.JTextArea textAreaSalas;
     private javax.swing.JTextArea textAreaSinopsis;
     private javax.swing.JTextField textFieldClasificacion;
     private javax.swing.JTextField textFieldDuracion;
