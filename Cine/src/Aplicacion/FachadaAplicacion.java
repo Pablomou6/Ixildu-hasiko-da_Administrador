@@ -252,5 +252,9 @@ public class FachadaAplicacion {
         }
         return true;
     }
+    
+    public String obtenerSalasYSesiones(Pelicula pelicula) {
+       return gestSesion.obtenerSalasYSesiones(pelicula);
+    }
 
 }

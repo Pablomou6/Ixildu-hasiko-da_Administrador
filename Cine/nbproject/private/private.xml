@@ -10,6 +10,10 @@
             <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/Aplicacion/Sala.java</file>
             <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/GUI/VPrincipal.java</file>
             <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/GUI/VGestionPeliculas.java</file>
+            <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/GUI/VCartelera.java</file>
+            <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/Aplicacion/GestorSesion.java</file>
+            <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/BaseDatos/FachadaBaseDatos.java</file>
+            <file>file:/home/alumnogreibd/BasesDatos2/ProyectoBDII_Administrador/Cine/src/BaseDatos/DAOSesiones.java</file>
         </group>
     </open-files>
 </project-private>

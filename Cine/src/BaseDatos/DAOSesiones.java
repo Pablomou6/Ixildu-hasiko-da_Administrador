@@ -214,7 +214,45 @@ public class DAOSesiones extends AbstractDAO {
             try { if (stm != null) stm.close(); } catch (Exception e) { System.out.println("No se ha podido cerrar el PreparedStatement"); }
         }
     }
+    
+    public String obtenerSalasYSesiones(Pelicula pelicula) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        StringBuilder resultado = new StringBuilder();
 
+        try {
+            con = this.getConexion();
+            String consulta = 
+                "SELECT s.idSala, COUNT(s.idSesion) AS numSesiones " +
+                "FROM Sesion s " +
+                "WHERE s.titulo = ? " +
+                "GROUP BY s.idSala " +
+                "ORDER BY s.idSala";
+
+            stm = con.prepareStatement(consulta);
+            stm.setString(1, pelicula.getTitulo()); // Usar el título de la película
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                int idSala = rs.getInt("idSala");
+                int numSesiones = rs.getInt("numSesiones");
+                resultado.append("Sala ").append(idSala).append(" (").append(numSesiones).append(" sesiones), ");
+            }
+
+            // Eliminar la última coma y espacio, si existen
+            if (resultado.length() > 0) {
+                resultado.setLength(resultado.length() - 2);
+            }
+        } catch (SQLException e) {
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) { }
+            try { if (stm != null) stm.close(); } catch (Exception e) { }
+        }
+
+        return resultado.toString();
+    }
 
 
 }

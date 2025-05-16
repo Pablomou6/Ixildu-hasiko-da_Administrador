@@ -145,4 +145,8 @@ public class GestorSesion {
         
         return true;
     }
+    
+    public String obtenerSalasYSesiones(Pelicula pelicula) {
+        return fachadaBD.obtenerSalasYSesiones(pelicula);
+    }
 }

@@ -500,6 +500,12 @@ public class VPrincipal extends javax.swing.JFrame {
 
     private void tablaPeliculasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPeliculasMouseClicked
         Pelicula pelicula = modTablaPeliculas.obtenerPelicula(tablaPeliculas.getSelectedRow());
+        
+        String stringResultado;
+        
+        stringResultado = fachadaAp.obtenerSalasYSesiones(pelicula);
+        
+        textAreaSalas.setText(stringResultado);     
     }//GEN-LAST:event_tablaPeliculasMouseClicked
     
     private void limpiarTextField() {
